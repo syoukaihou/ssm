@@ -16,17 +16,17 @@ public class HelloController {
 	
 	private static Logger logger = LoggerFactory.getLogger(HelloController.class);
 	
-	// 现代模式,
+	// 
 	// http://localhost:8080/ssm/hello/mvc/123?name=asd
 	@RequestMapping(value="/mvc/{id}",method={RequestMethod.GET,RequestMethod.POST})
 	public String hello(@RequestParam("name") String name,@PathVariable("id") Integer id){
 		
-		System.out.println("webapp.root的值为==>" + System.getProperty("webapp.root"));
-		logger.info("获取的参数为：{},{}", name,id);
+		System.out.println("" + System.getProperty("webapp.root"));
+		logger.info("{},{}", name,id);
 		return "jsps/hello";
 	}
 	
-	// 传统模式
+	// 
 	@RequestMapping(value="/hi",method={RequestMethod.POST})
 	public String hi(HttpServletRequest request){
 		
@@ -34,7 +34,7 @@ public class HelloController {
 		
 		Integer age = Integer.valueOf(request.getParameter("age"));
 		
-		logger.debug("获取的参数为：{},{}", name,age);
+		logger.debug("{},{}", name,age);
 		return "";
 	}
 }

@@ -14,7 +14,6 @@
 		<websocket:mapping handler="marcoHandler" path="/marco"/>
 	</websocket:handlers>
 
-	<bean id="marcoHandler" class="com.snsprj.handlers.MarcoHandler"/>
-	
+	<bean id="marcoHandler" class="com.snsprj.handler.MarcoHandler"/>
 	
 </beans>
