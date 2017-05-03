@@ -13,6 +13,8 @@
 		<spring.version>4.2.5.RELEASE</spring.version>
 		<mybatis.version>3.4.0</mybatis.version>
 		<slf4j.version>1.7.21</slf4j.version>
+		<mysql.connector.version>6.0.6</mysql.connector.version>
+		<c3p0.version>0.9.5.2</c3p0.version>
 	</properties>
 
 	<dependencies>
@@ -73,7 +75,20 @@
 		    <version>${slf4j.version}</version>
 		</dependency>
 
+		<!-- 数据库 -->
+		<!-- mysql数据库连接驱动 -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>${mysql.connector.version}</version>
+		</dependency>
 		
+		<!-- c3p0连接池 -->
+		<dependency>
+		    <groupId>com.mchange</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>${c3p0.version}</version>
+		</dependency>
 		
 		
 

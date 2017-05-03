@@ -10,6 +10,32 @@
 							http://www.springframework.org/schema/websocket
                         	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
+	<!-- 引入外部属性文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- 定义使用c3p0连接池的数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	<!-- 整合spring与mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<!-- 表示我们的Mapper文件存放的位置，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
+		<property name="mapperLocation" value="classpath:com/snsprj/mapper/*.xml"></property>
+		
+		<!--  -->
+		<property name="typeAliasesPackage" value="com.snsprj.mapper"></property>
+	
+	</bean>
+	
+	
+	
+	
 	<websocket:handlers>
 		<websocket:mapping handler="marcoHandler" path="/marco"/>
 	</websocket:handlers>
