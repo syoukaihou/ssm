@@ -25,16 +25,29 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		
-		<!-- 表示我们的Mapper文件存放的位置，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
+		<!-- 自动扫描mapping.xml文件，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
 		<property name="mapperLocation" value="classpath:com/snsprj/mapper/*.xml"></property>
 		
-		<!--  -->
-		<property name="typeAliasesPackage" value="com.snsprj.mapper"></property>
+		
+		<property name="typeAliasesPackage" value="com.snsprj.dto"></property>
 	
 	</bean>
 	
+	<!-- scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.snsprj.dao"></property>
+		
+		<!-- Specifies which {@code SqlSessionFactory} to use in the case that there is
+   			 more than one in the spring context. Usually this is only needed when you
+   			 have more than one datasource. -->
+		<property name="setSqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
 	
-	
+	<!-- 配置数据库事务 -->
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 	
 	<websocket:handlers>
 		<websocket:mapping handler="marcoHandler" path="/marco"/>
