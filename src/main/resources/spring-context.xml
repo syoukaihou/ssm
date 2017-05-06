@@ -10,6 +10,17 @@
 							http://www.springframework.org/schema/websocket
                         	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
+	<!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
+	<context:component-scan base-package="com.snsprj.dao" />
+	<context:component-scan base-package="com.snsprj" />
+	
+	<!-- AutowiredAnnotationBeanPostProcessor,
+		CommonAnnotationBeanPostProcessor,
+		PersistenceAnnotationBeanPostProcessor,
+		RequiredAnnotationBeanPostProcessor -->
+    <!-- <context:annotation-config /> -->
+    
+	
 	<!-- 引入外部属性文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	

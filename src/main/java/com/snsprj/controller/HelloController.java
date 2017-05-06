@@ -4,20 +4,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.snsprj.service.UserAuthService;
 
 @Controller
-@RequestMapping("/hello")
 public class HelloController {
 	
 	private static Logger logger = LoggerFactory.getLogger(HelloController.class);
 	
-	// 
-	// http://localhost:8080/ssm/hello/mvc/123?name=asd
 	@RequestMapping(value="/mvc/{id}",method={RequestMethod.GET,RequestMethod.POST})
 	public String hello(@RequestParam("name") String name,@PathVariable("id") Integer id){
 		
@@ -36,6 +37,19 @@ public class HelloController {
 		
 		logger.debug("{},{}", name,age);
 		return "";
+	}
+	
+	@Autowired
+	UserAuthService userAuthService;
+	
+//	@RequestMapping(value="/mybatis",produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/mybatis")
+	@ResponseBody
+	public String testMybatis() {
+		
+		boolean flag = userAuthService.login("123", "123");
+		
+		return "登录结果：" + flag;
 	}
 }
 
