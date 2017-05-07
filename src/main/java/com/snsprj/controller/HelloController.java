@@ -69,7 +69,9 @@ public class HelloController {
         // private int height = 25;// 图片高
         // private int lineSize = 40;// 干扰线数量
         // private int stringNum = 4;// 随机产生字符数量
-        ImageCaptcha imageCaptcha = new ImageCaptcha(95, 25, 4, 30);
+        // 160, 40, 5, 150
+        // 95,25,4,40
+        ImageCaptcha imageCaptcha = new ImageCaptcha(95,25,4,40);
         try {
             imageCaptcha.getRandcode(request, response);// 输出验证码图片方法
         } catch (Exception e) {

@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- 首次获取验证码图片，也可在此将src设为访问路径/getVerify -->
-<img id="imgVerify" src="" alt="点击更换验证码" width="112" height="36" onclick="getVerify(this);">
+<img id="imgVerify" src="" alt="点击更换验证码" width="95" height="25" onclick="getVerify(this);">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/public/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
