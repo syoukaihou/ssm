@@ -10,9 +10,6 @@
                         http://www.springframework.org/schema/context  
                         http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<!-- 使用组件扫描的方式可以一次扫描多个Controller -->
-    <context:component-scan base-package="com.snsprj.controller"></context:component-scan>
-
 	<!-- 让DispatchServlet启动基于annotation的HandlerMapping -->
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
@@ -22,6 +19,9 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	
+	<!-- 使用组件扫描的方式可以一次扫描多个Controller -->
+    <context:component-scan base-package="com.snsprj.controller"></context:component-scan>
 	
 	<!-- viewResolver -->
 	 <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->

@@ -12,6 +12,9 @@
   	<param-value>webapp.root</param-value>
   </context-param>
   
+  <!-- 加载顺序 -->
+  <!-- ServletContext(servlet上下文) -> listener -> filter -> servlet -->
+  
   <!-- 配置spring context 文件位置 -->
   <context-param>
   	<param-name>contextConfigLocation</param-name>

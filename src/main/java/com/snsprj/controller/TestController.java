@@ -1,6 +1,17 @@
 package com.snsprj.controller;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.snsprj.utils.HttpRequest;
+import com.snsprj.vo.LoginVO;
 
 @Controller
 @RequestMapping(value="/test")
@@ -100,10 +112,56 @@ public class TestController {
 	
 	@RequestMapping(value="/view")
 	public String getTestJsp(){
-		
-		
-		
-		
+
 		return "jsps/test";
 	}
+	
+	
+	@RequestMapping(value="post/login",method={RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String testLogin(@Valid LoginVO loginVO,Errors errors){
+		
+		if(errors.hasErrors()){
+			Map<String, String> errorMap = new HashMap<String, String>();
+			
+			System.out.println("出现了验证错误！！");
+
+			List<FieldError> fieldErrorList = errors.getFieldErrors();
+			
+			
+			for(int i=0;i<fieldErrorList.size();i++){
+				FieldError fieldError = fieldErrorList.get(i);
+				String objectName = fieldError.getField();
+				String defaultMessage = fieldError.getDefaultMessage();
+				errorMap.put(objectName, defaultMessage);
+			}
+
+			
+			return JSON.toJSONString(errorMap);
+		}
+		
+		return loginVO.getUsername() + "----->" + loginVO.getPassword();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
