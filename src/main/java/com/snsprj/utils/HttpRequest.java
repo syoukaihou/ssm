@@ -1,4 +1,4 @@
-package com.snsprj.services;
+package com.snsprj.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
