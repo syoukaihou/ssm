@@ -1,8 +1,9 @@
 package com.snsprj.vo;
 
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 /**
@@ -12,11 +13,11 @@ import javax.validation.constraints.Size;
  */
 public class LoginVO {
 
-	@NotNull(message="{用户名的长度为5到16位！}")
-	@Size(min=5,max=16)
+    @NotEmpty(message="用户名不能为空！")
+	@Size(min=5,max=16,message="用户名的长度为5到16位！")
 	private String username;
 	
-	@NotNull
+	@NotEmpty(message="密码不能为空！")
 	@Size(min=6,max=16)
 	private String password;
 
