@@ -14,3 +14,6 @@ hs_err_pid*
 .project
 .classpath
 target/
+ssm.iml
+.idea/
+src/main/resources/jdbc.properties
