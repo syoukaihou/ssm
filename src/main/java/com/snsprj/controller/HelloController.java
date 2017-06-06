@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.snsprj.service.UserAuthService;
+import com.snsprj.service.IUserAuthService;
 import com.snsprj.utils.ImageCaptcha;
 
 @Controller
@@ -45,7 +45,7 @@ public class HelloController {
     }
 
     @Autowired
-    UserAuthService userAuthService;
+    IUserAuthService userAuthService;
 
     // @RequestMapping(value="/mybatis",produces = "text/json;charset=UTF-8")
     @RequestMapping(value = "/mybatis")

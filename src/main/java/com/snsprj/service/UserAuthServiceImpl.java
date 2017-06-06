@@ -3,21 +3,21 @@ package com.snsprj.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.snsprj.dao.UserDTOMapper;
-import com.snsprj.dto.UserDTO;
+import com.snsprj.dao.UserMapper;
+import com.snsprj.dto.User;
 
 @Service
-public class UserAuthServiceImpl implements UserAuthService {
+public class UserAuthServiceImpl implements IUserAuthService {
 
 	@Autowired
-	UserDTOMapper userDTOMapper;
+	UserMapper userMapper;
 	
 	@Override
 	public boolean login(String account, String password) {
 
-		UserDTO userDTO = userDTOMapper.selectByPrimaryKey(1);
+		User user = userMapper.selectByPrimaryKey(1);
 		
-		if(userDTO != null){
+		if(user != null){
 			return true;
 		}
 		return false;

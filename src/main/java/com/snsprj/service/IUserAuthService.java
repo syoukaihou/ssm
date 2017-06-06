@@ -1,6 +1,6 @@
 package com.snsprj.service;
 
-public interface UserAuthService {
+public interface IUserAuthService {
 
 	public boolean login(String account,String password);
 }
