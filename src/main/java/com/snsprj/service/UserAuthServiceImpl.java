@@ -22,4 +22,9 @@ public class UserAuthServiceImpl implements IUserAuthService {
 		}
 		return false;
 	}
+
+	public User getUserDetail(Integer userId){
+
+		return userMapper.selectDetailByPrimaryKey(userId);
+	}
 }

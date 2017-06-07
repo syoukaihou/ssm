@@ -50,4 +50,12 @@ public interface UserMapper {
      * @mbg.generated Tue Jun 06 16:31:12 CST 2017
      */
     int updateByPrimaryKey(User record);
+
+
+    /**
+     * 根据用户id获取用户详细信息
+     * @param id userId
+     * @return User
+     */
+    User selectDetailByPrimaryKey(Integer id);
 }

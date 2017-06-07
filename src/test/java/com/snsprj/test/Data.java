@@ -3,7 +3,7 @@ package com.snsprj.test;
 import java.io.Serializable;
 
 /**
- * ≤‚ ‘Serializable
+ * Serializable
  * @author john
  *
  */
