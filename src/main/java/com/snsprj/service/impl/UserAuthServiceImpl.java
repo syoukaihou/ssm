@@ -1,5 +1,6 @@
-package com.snsprj.service;
+package com.snsprj.service.impl;
 
+import com.snsprj.service.IUserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
