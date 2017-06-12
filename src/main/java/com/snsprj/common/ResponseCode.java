@@ -5,11 +5,7 @@ package com.snsprj.common;
  */
 public enum ResponseCode {
 
-    SUCCESS(0,"SUCCESS"),
-
-    // 通用error code
-    ERROR(1,"ERROR"),
-    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT");
+    SUCCESS(0,"SUCCESS");
 
     private final int code;
     private final String desc;

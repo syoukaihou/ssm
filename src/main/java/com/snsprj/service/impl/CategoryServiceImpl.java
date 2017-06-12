@@ -4,6 +4,7 @@ import com.snsprj.common.Const;
 import com.snsprj.dao.CategoryMapper;
 import com.snsprj.dto.Category;
 import com.snsprj.service.ICategoryService;
+import com.snsprj.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,15 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
     @Override
-    public int insertCategory(String name, int parentId) {
+    public int insertCategory(CategoryVo categoryVo) {
+
+        String name = categoryVo.getCategoryName();
+        int parentId = categoryVo.getParentId();
+
+        // TODO check category name is exist
 
         // check parentId is available
-        Category parentCategory = categoryMapper.selectByPrimaryKey(parentId,Const.activeStatus);
+        Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, Const.activeStatus);
         if(parentCategory == null){
             return Const.illegalParentId;
         }

@@ -1,10 +1,16 @@
 package com.snsprj.controller;
 
+import com.snsprj.common.ErrorCode;
+import com.snsprj.common.ServerResponse;
 import com.snsprj.service.ICategoryService;
+import com.snsprj.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
 
 /**
  * Created by skh on 2017/6/12.
@@ -15,11 +21,21 @@ public class CategoryController {
     @Autowired
     private ICategoryService iCategoryService;
 
-    @RequestMapping(value="/test/add")
+    @RequestMapping(value="/category/add")
     @ResponseBody
-    public String addCategory(){
+    public ServerResponse<CategoryVo> addCategory(@Valid CategoryVo categoryVo, Errors errors){
 
-        iCategoryService.insertCategory("汽车类",0);
-        return "";
+        System.out.println("产品分类名称：" + categoryVo.getCategoryName());
+        if(errors.hasErrors()){
+            return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
+        }
+        int result = iCategoryService.insertCategory(categoryVo);
+
+        if(result > 0){
+            return ServerResponse.createBySuccess();
+        }else{
+            return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
+        }
+
     }
 }
