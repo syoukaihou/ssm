@@ -51,7 +51,7 @@ public class IndexController {
         userMap.put("nickname","西门吹雪");
         map.addAttribute("user",userMap);
 
-        return "jsps/hello";
+        return "jsp/index";
     }
 
 
