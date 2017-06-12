@@ -6,8 +6,12 @@ import com.snsprj.dto.User;
 import com.snsprj.service.IUserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by skh on 2017/6/6.
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 
     @Autowired
-    IUserAuthService iUserAuthService;
+    private IUserAuthService iUserAuthService;
 
 
     @RequestMapping(value = "/index")
@@ -38,4 +42,18 @@ public class IndexController {
 
         return resultUser;
     }
+
+
+    @RequestMapping(value="test/map")
+    public String testMap(ModelMap map){
+
+        Map<String,String> userMap = new HashMap<>();
+        userMap.put("nickname","西门吹雪");
+        map.addAttribute("user",userMap);
+
+        return "jsps/hello";
+    }
+
+
+
 }

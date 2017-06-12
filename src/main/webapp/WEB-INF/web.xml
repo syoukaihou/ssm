@@ -51,7 +51,7 @@
   
   <!-- 设置session超时时间 ，单位分钟-->
   <session-config>
-  	<session-timeout>1</session-timeout>
+  	<session-timeout>10</session-timeout>
   </session-config>
   
   <!-- 中文编码过滤器 -->

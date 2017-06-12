@@ -9,6 +9,9 @@
 	</head>
 	<body>
 		<h1>HELLO SSM 你好</h1>
+
+        <div>${user.nickname}</div>
+
 		<script type="text/javascript" src="${pageContext.request.contextPath}/public/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript">
 			

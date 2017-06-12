@@ -32,6 +32,14 @@
 			<version>${mybatis.version}</version>
 		</dependency>
 
+		<!-- mybatis 分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

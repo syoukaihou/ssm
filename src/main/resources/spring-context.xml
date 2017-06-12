@@ -12,7 +12,7 @@
 
 	<!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
 	<context:component-scan base-package="com.snsprj.dao" />
-	<context:component-scan base-package="com.snsprj" />
+	<context:component-scan base-package="com.snsprj.service" />
 	
 	<!-- AutowiredAnnotationBeanPostProcessor,
 		CommonAnnotationBeanPostProcessor,
@@ -26,33 +26,50 @@
 	
 	<!-- 定义使用c3p0连接池的数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${jdbc.driverClass}"></property>
-		<property name="jdbcUrl" value="${jdbc.url}"></property>
-		<property name="user" value="${jdbc.username}"></property>
-		<property name="password" value="${jdbc.password}"></property>
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
 	</bean>
 	
 	<!-- 整合spring与mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSource"/>
 		
 		<!-- 自动扫描mapping.xml文件，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
-		<property name="mapperLocations" value="classpath:com/snsprj/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/snsprj/mapper/*.xml"/>
 		
 		
-		<property name="typeAliasesPackage" value="com.snsprj.dto"></property>
+		<property name="typeAliasesPackage" value="com.snsprj.dto"/>
+
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
 	
 	</bean>
 
 	
 	<!-- scan for mappers and let them be autowired -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.snsprj.dao"></property>
+		<property name="basePackage" value="com.snsprj.dao"/>
 		
 		<!-- Specifies which {@code SqlSessionFactory} to use in the case that there is
    			 more than one in the spring context. Usually this is only needed when you
    			 have more than one datasource. -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
 	
 	<!-- 配置数据库事务 -->
@@ -61,10 +78,5 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<websocket:handlers>
-		<websocket:mapping handler="marcoHandler" path="/marco"/>
-	</websocket:handlers>
 
-	<bean id="marcoHandler" class="com.snsprj.handler.MarcoHandler"/>
-	
 </beans>
