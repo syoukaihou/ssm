@@ -15,17 +15,6 @@ public class CategoryController {
     @Autowired
     private ICategoryService iCategoryService;
 
-    @RequestMapping(value="test/depth")
-    @ResponseBody
-    public String testGetCategoryDepth(){
-
-
-        int detph = iCategoryService.getCategotyDepth(8);
-
-
-        return Integer.toString(detph);
-    }
-
     @RequestMapping(value="/test/add")
     @ResponseBody
     public String addCategory(){

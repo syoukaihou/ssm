@@ -13,5 +13,4 @@ public interface ICategoryService {
      */
     public int insertCategory(String name,int parentId);
 
-    public int getCategotyDepth(int categoryId);
 }

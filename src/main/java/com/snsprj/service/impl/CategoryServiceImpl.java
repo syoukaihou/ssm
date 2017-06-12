@@ -24,14 +24,16 @@ public class CategoryServiceImpl implements ICategoryService {
     public int insertCategory(String name, int parentId) {
 
         // check parentId is available
-//        Category parentCategory = categoryMapper.selectByPrimaryKey(parentId,Const.activeStatus);
-//
-//        if(parentCategory == null){
-//            return Const.illegalParentId;
-//        }
+        Category parentCategory = categoryMapper.selectByPrimaryKey(parentId,Const.activeStatus);
+        if(parentCategory == null){
+            return Const.illegalParentId;
+        }
 
-        // todo, limit depth
-
+        // limit depth
+        int depth = this.getCategoryDepth(parentId);
+        if(Const.categoryDepth <= depth){
+            return Const.illegalParentId;
+        }
 
         Category category = new Category();
         category.setCategoryName(name);
@@ -67,8 +69,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @param categoryId category id
      * @return int
      */
-    @Override
-    public int getCategotyDepth(int categoryId){
+    private int getCategoryDepth(int categoryId){
 
         Category category = categoryMapper.selectByPrimaryKey(categoryId,Const.activeStatus);
 
@@ -77,9 +78,8 @@ public class CategoryServiceImpl implements ICategoryService {
         if(parentId == 0){
             return 1;
         }else{
-            return 1 + getCategotyDepth(parentId);
+            return 1 + getCategoryDepth(parentId);
         }
-
     }
 
 
