@@ -25,7 +25,6 @@ public class CategoryController {
     @ResponseBody
     public ServerResponse<CategoryVo> addCategory(@Valid CategoryVo categoryVo, Errors errors){
 
-        System.out.println("产品分类名称：" + categoryVo.getCategoryName());
         if(errors.hasErrors()){
             return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
         }

@@ -29,16 +29,18 @@ public class CategoryServiceImpl implements ICategoryService {
 
         // TODO check category name is exist
 
-        // check parentId is available
-        Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, Const.activeStatus);
-        if(parentCategory == null){
-            return Const.illegalParentId;
-        }
+        if(parentId != 0){
+            // check parentId is available
+            Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, Const.activeStatus);
+            if(parentCategory == null){
+                return Const.illegalParentId;
+            }
 
-        // limit depth
-        int depth = this.getCategoryDepth(parentId);
-        if(Const.categoryDepth <= depth){
-            return Const.illegalParentId;
+            // limit depth
+            int depth = this.getCategoryDepth(parentId);
+            if(Const.categoryDepth <= depth){
+                return Const.illegalParentId;
+            }
         }
 
         Category category = new Category();

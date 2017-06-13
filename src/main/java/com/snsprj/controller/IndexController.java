@@ -2,6 +2,7 @@ package com.snsprj.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.snsprj.common.PagePath;
 import com.snsprj.dto.User;
 import com.snsprj.service.IUserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class IndexController {
     private IUserAuthService iUserAuthService;
 
 
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/login")
     @ResponseBody
     public String login(){
 
@@ -44,14 +45,10 @@ public class IndexController {
     }
 
 
-    @RequestMapping(value="test/map")
-    public String testMap(ModelMap map){
+    @RequestMapping(value="index")
+    public String Index(){
 
-        Map<String,String> userMap = new HashMap<>();
-        userMap.put("nickname","西门吹雪");
-        map.addAttribute("user",userMap);
-
-        return "jsp/index";
+        return PagePath.index;
     }
 
 
