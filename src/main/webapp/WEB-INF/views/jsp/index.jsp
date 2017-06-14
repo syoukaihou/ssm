@@ -16,7 +16,7 @@
     <input type="button" class="btn btn-default" id="btn" value="按钮"/>
     <p id="rep_msg"></p>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
 
             alert("sfasgasg");

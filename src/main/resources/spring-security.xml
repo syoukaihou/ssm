@@ -7,10 +7,31 @@
 							http://www.springframework.org/schema/security
                             http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <security:http/>
+    <!-- 静态资源开放访问 -->
+    <security:http pattern="/resources/**" security="none"/>
+
+
+    <security:http auto-config="false" entry-point-ref="CommonAuthenticationEntryPoint">
+
+        <!-- <intercept-url pattern="/**" requires-channel="https" /> -->
+        <security:intercept-url pattern="/**" />
+        <security:csrf disabled="true" />
+        <security:headers disabled="true"/>
+        <security:logout/>
+        <security:custom-filter ref="mySignCheckerFilter" before="FIRST" />
+        <security:custom-filter ref="CommonResponseContentType" after="FIRST" />
+        <security:custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
+        <security:custom-filter ref="rememberMeProcessingFilter"
+                       position="REMEMBER_ME_FILTER" />
+    </security:http>
+
+
+
 
     <security:user-service>
         <security:user name="user" password="password" authorities="ROLE_USER" />
     </security:user-service>
 
+    <bean id="CommonAuthenticationEntryPoint"
+                class="com.snsproject.api.user.CommonAuthenticationEntryPoint" />
 </beans>
