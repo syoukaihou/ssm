@@ -7,6 +7,10 @@
 							http://www.springframework.org/schema/security
                             http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <security:http/>
 
+    <security:user-service>
+        <security:user name="user" password="password" authorities="ROLE_USER" />
+    </security:user-service>
 
 </beans>
