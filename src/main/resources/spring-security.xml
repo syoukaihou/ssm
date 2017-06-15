@@ -15,7 +15,7 @@
     [use-expressions]Enables EL-expressions in the access attribute, use expressions to secure individual URLs. The default value is true.
 
     -->
-    <security:http auto-config="false" entry-point-ref="CommonAuthenticationEntryPoint">
+    <security:http auto-config="false" entry-point-ref="commonAuthenticationEntryPoint">
 
         <!-- <intercept-url pattern="/**" requires-channel="https" /> -->
         <security:intercept-url pattern="/**" />
@@ -25,7 +25,7 @@
         <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
 
         <!--<security:custom-filter ref="mySignCheckerFilter" before="FIRST" />-->
-        <security:custom-filter ref="CommonResponseContentType" after="FIRST" />
+        <security:custom-filter ref="commonResponseContentType" after="FIRST" />
         <security:custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
         <security:custom-filter ref="rememberMeProcessingFilter"  position="REMEMBER_ME_FILTER" />
     </security:http>
@@ -41,14 +41,38 @@
 
 
 
-    <bean id="CommonAuthenticationEntryPoint" class="com.snsprj.security.User.CommonAuthenticationEntryPoint" />
+    <bean id="commonAuthenticationEntryPoint" class="com.snsprj.security.User.CommonAuthenticationEntryPoint" />
+
+    <bean id="commonResponseContentType" class="com.snsprj.security.User.CommonResponseContentTypeFilter"/>
+
+
+    <bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureHandler" ref="myFailureHandler"/>
+        <property name="authenticationSuccessHandler" ref="mySuccessHandler"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+    <bean id="mySuccessHandler" class="com.snsproject.api.user.CommonSuccessHandler" />
+    <bean id="myFailureHandler" class="com.snsproject.api.user.CommonFailureHandler" />
+
+    <bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+        <constructor-arg ref="authenticationManager" />
+        <constructor-arg ref="rememberMeServices" />
+    </bean>
 
     <bean id="userDetailService" class="com.snsprj.security.User.UserService"/>
 
-    <bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
     <bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
         <constructor-arg value="0o7Byv10Bbw1tr4kh"/>
+    </bean>
+
+    <bean id="rememberMeServices" class="com.snsprj.security.User.CustomRememberMeService">
+        <constructor-arg value="0o7Byv10Bbw1tr4kh" />
+        <constructor-arg ref="userDetailService" />
+        <constructor-arg ref="tokenRepository" />
     </bean>
 
     <bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
