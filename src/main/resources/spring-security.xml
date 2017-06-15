@@ -11,27 +11,51 @@
     <security:http pattern="/resources/**" security="none"/>
 
 
+    <!--
+    [use-expressions]Enables EL-expressions in the access attribute, use expressions to secure individual URLs. The default value is true.
+
+    -->
     <security:http auto-config="false" entry-point-ref="CommonAuthenticationEntryPoint">
 
         <!-- <intercept-url pattern="/**" requires-channel="https" /> -->
         <security:intercept-url pattern="/**" />
+
         <security:csrf disabled="true" />
         <security:headers disabled="true"/>
-        <security:logout/>
-        <security:custom-filter ref="mySignCheckerFilter" before="FIRST" />
+        <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
+
+        <!--<security:custom-filter ref="mySignCheckerFilter" before="FIRST" />-->
         <security:custom-filter ref="CommonResponseContentType" after="FIRST" />
         <security:custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
-        <security:custom-filter ref="rememberMeProcessingFilter"
-                       position="REMEMBER_ME_FILTER" />
+        <security:custom-filter ref="rememberMeProcessingFilter"  position="REMEMBER_ME_FILTER" />
     </security:http>
 
+    <!-- for registering the AuthenticationManager which provides authentication services to the application. -->
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="userDetailService">
+            <security:password-encoder ref="bcryptEncoder"/>
+        </security:authentication-provider>
+
+        <security:authentication-provider ref="rememberMeAuthenticationProvider"/>
+    </security:authentication-manager>
 
 
 
-    <security:user-service>
-        <security:user name="user" password="password" authorities="ROLE_USER" />
-    </security:user-service>
+    <bean id="CommonAuthenticationEntryPoint" class="com.snsprj.security.User.CommonAuthenticationEntryPoint" />
 
-    <bean id="CommonAuthenticationEntryPoint"
-                class="com.snsproject.api.user.CommonAuthenticationEntryPoint" />
+    <bean id="userDetailService" class="com.snsprj.security.User.UserService"/>
+
+    <bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <constructor-arg value="0o7Byv10Bbw1tr4kh"/>
+    </bean>
+
+    <bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 是否在系统启动时创建持久化token的数据库表 -->
+        <property name="createTableOnStartup" value="true" />
+    </bean>
+
 </beans>

@@ -52,6 +52,15 @@
     users.id = #{id}
   </select>
 
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List"/>
+    FROM
+    users
+    WHERE
+    account = #{account}
+  </select>
+
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
