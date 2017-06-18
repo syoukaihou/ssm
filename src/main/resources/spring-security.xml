@@ -13,7 +13,6 @@
 
     <!--
     [use-expressions]Enables EL-expressions in the access attribute, use expressions to secure individual URLs. The default value is true.
-
     -->
     <security:http auto-config="false" entry-point-ref="commonAuthenticationEntryPoint">
 
@@ -30,6 +29,7 @@
         <security:custom-filter ref="rememberMeProcessingFilter"  position="REMEMBER_ME_FILTER" />
     </security:http>
 
+    <!-- To add some users -->
     <!-- for registering the AuthenticationManager which provides authentication services to the application. -->
     <security:authentication-manager alias="authenticationManager">
         <security:authentication-provider user-service-ref="userDetailService">
@@ -53,8 +53,8 @@
         <property name="rememberMeServices" ref="rememberMeServices"/>
     </bean>
 
-    <bean id="mySuccessHandler" class="com.snsproject.api.user.CommonSuccessHandler" />
-    <bean id="myFailureHandler" class="com.snsproject.api.user.CommonFailureHandler" />
+    <bean id="mySuccessHandler" class="com.snsprj.security.User.CommonSuccessHandler" />
+    <bean id="myFailureHandler" class="com.snsprj.security.User.CommonFailureHandler" />
 
     <bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
         <constructor-arg ref="authenticationManager" />
