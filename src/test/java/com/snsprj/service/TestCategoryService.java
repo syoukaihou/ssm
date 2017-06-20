@@ -1,8 +1,5 @@
 package com.snsprj.service;
 
-import com.snsprj.service.impl.CategoryServiceImpl;
-import org.junit.Test;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

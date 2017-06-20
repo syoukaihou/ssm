@@ -23,8 +23,11 @@
         <security:headers disabled="true"/>
         <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
 
+        <!-- APP check sign -->
         <!--<security:custom-filter ref="mySignCheckerFilter" before="FIRST" />-->
-        <security:custom-filter ref="commonResponseContentType" after="FIRST" />
+
+        <!--<security:custom-filter ref="commonResponseContentType" after="FIRST" />-->
+
         <security:custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
         <security:custom-filter ref="rememberMeProcessingFilter"  position="REMEMBER_ME_FILTER" />
     </security:http>
@@ -40,8 +43,13 @@
     </security:authentication-manager>
 
 
-
+    <!-- 401 Unauthorized -->
     <bean id="commonAuthenticationEntryPoint" class="com.snsprj.security.User.CommonAuthenticationEntryPoint" />
+
+    <!--  -->
+    <bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg name="loginFormUrl" value="/index"/>
+    </bean>
 
     <bean id="commonResponseContentType" class="com.snsprj.security.User.CommonResponseContentTypeFilter"/>
 
@@ -79,7 +87,7 @@
         <!-- 数据源 -->
         <property name="dataSource" ref="dataSource" />
         <!-- 是否在系统启动时创建持久化token的数据库表 -->
-        <property name="createTableOnStartup" value="true" />
+        <property name="createTableOnStartup" value="false" />
     </bean>
 
 </beans>
