@@ -6,4 +6,6 @@ package com.snsprj.common;
 public final class PagePath {
 
     public static final String index = "jsp/index";
+
+    public static final String userLogin = "jsp/login";
 }

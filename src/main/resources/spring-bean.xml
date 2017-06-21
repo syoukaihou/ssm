@@ -16,10 +16,14 @@
                         <prop key="kaptcha.image.width">100</prop>
                         <prop key="kaptcha.image.height">50</prop>
                         <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.DefaultNoise</prop>
-                        <prop key="kaptcha.textproducer.char.string">0123456789abcdefghijklmnopqrstuvwxyz</prop>
+                        <prop key="kaptcha.textproducer.char.string">2346789abcdefghjkmnpqrtuvwxyz</prop>
                         <prop key="kaptcha.textproducer.char.length">4</prop>
                         <!-- 验证码文本字符颜色 -->
-                        <prop key="kaptcha.textproducer.font.color ">BLUE</prop>
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <!-- 干扰颜色 -->
+                        <prop key="kaptcha.noise.color">blue</prop>
+                        <!-- 图片样式 -->
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.WaterRipple</prop>
                     </props>
                 </constructor-arg>
             </bean>

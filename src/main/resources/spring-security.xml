@@ -10,7 +10,6 @@
     <!-- 静态资源开放访问 -->
     <security:http pattern="/resources/**" security="none"/>
 
-
     <!--
 
     -->
@@ -20,14 +19,17 @@
         <!-- open captcha api -->
         <security:intercept-url pattern="/captcha/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
+        <!-- normal user login page -->
+        <security:intercept-url pattern="/auth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
-        <!--<security:intercept-url pattern="/**" access="ROLE_USER" requires-channel="any" />-->
+
+        <security:intercept-url pattern="/**" access="ROLE_USER" requires-channel="any" />
 
         <security:csrf disabled="true" />
         <security:headers disabled="true"/>
         <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
 
-        <!-- APP check sign -->
+        <!-- APP sign checker  -->
         <!--<security:custom-filter ref="mySignCheckerFilter" before="FIRST" />-->
 
         <!--<security:custom-filter ref="commonResponseContentType" after="FIRST" />-->

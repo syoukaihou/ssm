@@ -7,26 +7,26 @@ import com.snsprj.dto.User;
 import com.snsprj.service.IUserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * Created by skh on 2017/6/6.
  */
 @Controller
-public class IndexController {
+public class UserController {
 
     @Autowired
     private IUserAuthService iUserAuthService;
 
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "auth/user/login" ,method={RequestMethod.POST})
     @ResponseBody
-    public String login(){
+    public String login(HttpServletRequest request){
 
         Boolean result = iUserAuthService.login("123","123456");
 
@@ -45,10 +45,10 @@ public class IndexController {
     }
 
 
-    @RequestMapping(value="index")
+    @RequestMapping(value="auth/user/login",method = {RequestMethod.GET})
     public String Index(){
 
-        return PagePath.index;
+        return PagePath.userLogin;
     }
 
 
