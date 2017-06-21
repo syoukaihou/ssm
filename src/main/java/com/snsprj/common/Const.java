@@ -15,4 +15,15 @@ public final class Const {
     public static final byte blockStatus = 0;
 
     public static final byte activeStatus = 1;
+
+    // session keys definition start =============================================
+
+    public static final String imageCaptchaSessionKey = "imageCaptchaSessionKey";
+
+
+
+
+
+
+    // session keys definition end  =============================================
 }

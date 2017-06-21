@@ -16,6 +16,7 @@ public class UserService implements UserDetailsService {
 
 
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private UserMapper userMapper;
 
     /**

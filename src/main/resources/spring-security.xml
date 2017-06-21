@@ -12,12 +12,16 @@
 
 
     <!--
-    [use-expressions]Enables EL-expressions in the access attribute, use expressions to secure individual URLs. The default value is true.
-    -->
-    <security:http auto-config="false" entry-point-ref="commonAuthenticationEntryPoint">
 
-        <!-- <intercept-url pattern="/**" requires-channel="https" /> -->
-        <security:intercept-url pattern="/**" />
+    -->
+    <security:http auto-config="false" use-expressions="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
+
+
+        <!-- open captcha api -->
+        <security:intercept-url pattern="/captcha/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+
+
+        <!--<security:intercept-url pattern="/**" access="ROLE_USER" requires-channel="any" />-->
 
         <security:csrf disabled="true" />
         <security:headers disabled="true"/>

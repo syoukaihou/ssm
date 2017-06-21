@@ -42,5 +42,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
+	<!-- 引用外部配置文件 -->
+	<import resource="spring-bean.xml"/>
 
 </beans>
