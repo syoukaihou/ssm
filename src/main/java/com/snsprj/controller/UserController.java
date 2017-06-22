@@ -24,7 +24,7 @@ public class UserController {
     private IUserAuthService iUserAuthService;
 
 
-    @RequestMapping(value = "auth/user/login" ,method={RequestMethod.POST})
+    @RequestMapping(value = "auth/login" ,method={RequestMethod.POST})
     @ResponseBody
     public String login(HttpServletRequest request){
 
@@ -45,7 +45,11 @@ public class UserController {
     }
 
 
-    @RequestMapping(value="auth/user/login",method = {RequestMethod.GET})
+    /**
+     *
+     * @return login page
+     */
+    @RequestMapping(value="auth/login",method = {RequestMethod.GET})
     public String Index(){
 
         return PagePath.userLogin;

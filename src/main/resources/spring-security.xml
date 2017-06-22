@@ -19,7 +19,7 @@
         <!-- open captcha api -->
         <security:intercept-url pattern="/captcha/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
-        <!-- normal user login page -->
+        <!-- open login page -->
         <security:intercept-url pattern="/auth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
 
