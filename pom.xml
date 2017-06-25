@@ -16,6 +16,7 @@
 		<slf4j.version>1.7.21</slf4j.version>
 		<mysql.connector.version>5.1.42</mysql.connector.version>
 		<c3p0.version>0.9.5.2</c3p0.version>
+        <apache.shiro.version>1.4.0</apache.shiro.version>
 	</properties>
 
 	<dependencies>
@@ -64,6 +65,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- apache shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${apache.shiro.version}</version>
         </dependency>
 
 
