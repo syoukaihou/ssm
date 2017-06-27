@@ -13,7 +13,7 @@
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <association property="userInfo" javaType="com.snsprj.dto.UserInfo">
-      <id column="id"  property="id" />
+      <id column="user_info_id"  property="id" />
       <result column="user_id"  property="userId" />
       <result column="nickname" property="nickname" />
       <result column="avatar" property="avatar" />
@@ -45,7 +45,8 @@
   <!-- 获取用户详细信息，一对一 -->
   <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    users.id ,users.account ,user_info.id,user_info.user_id,user_info.nickname,user_info.avatar
+    users.id ,users.account ,
+    user_info.id AS user_info_id,user_info.user_id,user_info.nickname,user_info.avatar
     from
     users users left JOIN user_info user_info on users.id = user_info.user_id
     WHERE

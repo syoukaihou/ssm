@@ -65,11 +65,7 @@ public class CategoryServiceImpl implements ICategoryService {
         }
     }
 
-    private void recursiveCategory(){
 
-
-
-    }
 
     /**
      * get depth of category,
