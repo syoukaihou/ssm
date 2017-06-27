@@ -32,6 +32,18 @@
     from products
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!-- 根据categoryId查询商品 -->
+  <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from products
+    where category_id = #{categoryId} and status = #{status}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from products
     where id = #{id,jdbcType=INTEGER}
