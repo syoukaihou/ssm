@@ -38,6 +38,7 @@
 		
 		<property name="typeAliasesPackage" value="com.snsprj.dto"/>
 
+		<!-- pageHelper分页插件-->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">

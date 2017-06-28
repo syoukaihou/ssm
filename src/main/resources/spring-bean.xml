@@ -31,4 +31,7 @@
     </bean>
 
 
+    <!--注册方法验证的后处理器-->
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
 </beans>
