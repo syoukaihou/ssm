@@ -1,5 +1,6 @@
 package com.snsprj.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.snsprj.common.ServerResponse;
 import com.snsprj.dto.Product;
 import com.snsprj.service.IProductService;
@@ -29,17 +30,17 @@ public class ProductController {
 
     @RequestMapping("list")
     @ResponseBody
-    public ServerResponse<List<Product>> getProductList(@Min(0) Integer category_id,
+    public ServerResponse<PageInfo> getProductList(@Min(0) Integer category_id,
                                                         @NotNull Integer page_num){
 
         // TODO 若 categoryId=0 则显示所有商品
 
         Byte status = 1;
 
-        List<Product> productList = iProductService.getProductByCategoryId(category_id,status,page_num,10);
+        PageInfo page = iProductService.getProductByCategoryId(category_id,status,page_num,1);
 
 
-        return ServerResponse.createBySuccess(productList);
+        return ServerResponse.createBySuccess(page);
     }
 
 }

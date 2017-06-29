@@ -1,6 +1,7 @@
 package com.snsprj.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.snsprj.dao.ProductMapper;
 import com.snsprj.dto.Product;
 import com.snsprj.service.IProductService;
@@ -25,15 +26,17 @@ public class ProductServiceImpl implements IProductService{
      * @param status status 1:在售；2：下架；3：删除
      * @param pageNum pageNum
      * @param pageSize pageSize
-     * @return List
+     * @return PageInfo
      */
-    public List<Product> getProductByCategoryId(Integer categoryId,Byte status,
+    public PageInfo getProductByCategoryId(Integer categoryId,Byte status,
                                                 int pageNum,int pageSize ){
 
+        // 紧跟着的第一个select方法会被分页
         PageHelper.startPage(pageNum,pageSize);
 
         List<Product> productList = productMapper.selectByCategoryId(categoryId,status);
 
-        return productList;
+        PageInfo page = new PageInfo(productList);
+        return page;
     }
 }
