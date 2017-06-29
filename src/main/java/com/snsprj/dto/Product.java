@@ -20,6 +20,8 @@ public class Product {
 
     private Byte status;
 
+    private Byte isTop;
+
     private Date createdAt;
 
     private Date updatedAt;
@@ -90,6 +92,14 @@ public class Product {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Byte getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(Byte isTop) {
+        this.isTop = isTop;
     }
 
     public Date getCreatedAt() {

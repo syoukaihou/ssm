@@ -27,5 +27,5 @@ public interface ProductMapper {
      * @return List
      */
     List<Product> selectByCategoryId(@Param("categoryId") Integer categoryId,
-                         @Param("status") Byte status);
+                                     @Param("status") Byte status);
 }

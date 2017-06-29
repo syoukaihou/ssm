@@ -10,6 +10,7 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_top" jdbcType="TINYINT" property="isTop" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
@@ -18,8 +19,8 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, category_id, product_name, subtitle, main_image, price, stock, status, created_at, 
-    updated_at
+    id, category_id, product_name, subtitle, main_image, price, stock, status, is_top, 
+    created_at, updated_at
   </sql>
   <sql id="Blob_Column_List">
     sub_images, detail
@@ -32,18 +33,6 @@
     from products
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-  <!-- 根据categoryId查询商品 -->
-  <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from products
-    where category_id = #{categoryId} and status = #{status}
-  </select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from products
     where id = #{id,jdbcType=INTEGER}
@@ -54,12 +43,14 @@
     </selectKey>
     insert into products (category_id, product_name, subtitle, 
       main_image, price, stock, 
-      status, created_at, updated_at, 
-      sub_images, detail)
+      status, is_top, created_at, 
+      updated_at, sub_images, detail
+      )
     values (#{categoryId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
       #{mainImage,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, now(), now(),
-      #{subImages,jdbcType=LONGVARCHAR}, #{detail,jdbcType=LONGVARCHAR})
+      #{status,jdbcType=TINYINT}, #{isTop,jdbcType=TINYINT}, now(), 
+      now(), #{subImages,jdbcType=LONGVARCHAR}, #{detail,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.snsprj.dto.Product">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -87,6 +78,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="isTop != null">
+        is_top,
       </if>
       <if test="createdAt != null">
         created_at,
@@ -122,6 +116,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=TINYINT},
       </if>
       <if test="createdAt != null">
         now(),
@@ -161,9 +158,12 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-      <if test="updatedAt != null">
-        updated_at = now(),
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=TINYINT},
       </if>
+
+        updated_at = now(),
+
       <if test="subImages != null">
         sub_images = #{subImages,jdbcType=LONGVARCHAR},
       </if>
@@ -182,6 +182,7 @@
       price = #{price,jdbcType=DECIMAL},
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+      is_top = #{isTop,jdbcType=TINYINT},
       updated_at = now(),
       sub_images = #{subImages,jdbcType=LONGVARCHAR},
       detail = #{detail,jdbcType=LONGVARCHAR}
@@ -196,7 +197,19 @@
       price = #{price,jdbcType=DECIMAL},
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+      is_top = #{isTop,jdbcType=TINYINT},
       updated_at = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 根据categoryId查询商品 -->
+  <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from products
+    where category_id = #{categoryId} and status = #{status}
+    ORDER BY is_top desc , updated_at desc
+  </select>
 </mapper>
