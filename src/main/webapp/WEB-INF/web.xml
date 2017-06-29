@@ -88,6 +88,13 @@
   
   <!-- 自定义listener -->
 
+	<!-- 异常页面处理 -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404</location>
+    </error-page>
+
+
   
   
 </web-app>

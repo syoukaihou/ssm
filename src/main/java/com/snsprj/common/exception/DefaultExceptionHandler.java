@@ -1,6 +1,6 @@
 package com.snsprj.common.exception;
 
-import com.snsprj.common.ServerResponse;
+import com.snsprj.common.PagePath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -22,20 +22,21 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
 
         ModelAndView mv = new ModelAndView();
 
+        // set status code
+        // response.setStatus(HttpStatus.OK.value());
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        // set content type
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        // set character encoding
+        response.setCharacterEncoding("UTF-8");
+
+        response.setHeader("Cache-Control", "no-cache, must-revalidate");
+
         // handle ConstraintViolationException
         if(ex instanceof ConstraintViolationException){
-
-            // set status code
-            response.setStatus(HttpStatus.OK.value());
-
-            // set content type
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-            // set character encoding
-            response.setCharacterEncoding("UTF-8");
-
-            response.setHeader("Cache-Control", "no-cache, must-revalidate");
-
+            // 参数校验异常
             try {
                 // TODO get detail error message
 
@@ -43,10 +44,10 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            // 其他异常页面返回
+            mv.setViewName(PagePath.error500);
         }
-
-
-
 
         return mv;
     }
