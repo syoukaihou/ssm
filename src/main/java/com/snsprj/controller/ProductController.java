@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ProductController {
 
     @RequestMapping("list")
     @ResponseBody
-    public ServerResponse<List<Product>> getProductList(@NotNull Integer category_id,
+    public ServerResponse<List<Product>> getProductList(@Min(0) Integer category_id,
                                                         @NotNull Integer page_num){
 
         // TODO 若 categoryId=0 则显示所有商品
