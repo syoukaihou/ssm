@@ -36,7 +36,7 @@
             var username = $("#username").val();
             var password = $("#password").val();
             $.ajax({
-                url:"/ssm/test/post/login",
+                url:"/ssm/auth/login",
                 data:{"username":username,"password":password},
                 type:"post",
                 dataType:"json",

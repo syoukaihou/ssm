@@ -4,11 +4,36 @@
        xis:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="myRealm" class="com.snsprj.shiro.MyRealm"/>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/auth/login"/>
+        <property name="successUrl" value="/user/index"/>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 登录注册post请求 -->
+                /auth/** = anon
+                <!-- 静态资源 -->
+                /resources/** = anon
+                <!-- 验证码 -->
+                /captcha/** = anon
+
+
+                /** = authc
+            </value>
+        </property>
+
+
+
+    </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myRealm"/>
     </bean>
+
+    <bean id="myRealm" class="com.snsprj.shiro.MyRealm"/>
+
+
+
 
 
 </beans>
