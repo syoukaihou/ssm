@@ -17,6 +17,7 @@
 		<mysql.connector.version>5.1.42</mysql.connector.version>
 		<c3p0.version>0.9.5.2</c3p0.version>
         <apache.shiro.version>1.4.0</apache.shiro.version>
+        <org.quartz.version>2.2.3</org.quartz.version>
 	</properties>
 
 	<dependencies>
@@ -55,7 +56,22 @@
             <version>${spring.version}</version>  
         </dependency>
 
-		<!-- spring security -->
+		<!-- 定时任务 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${org.quartz.version}</version>
+        </dependency>
+
+
+
+        <!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>

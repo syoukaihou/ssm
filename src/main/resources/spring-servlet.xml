@@ -44,5 +44,6 @@
 
 	<!-- 引用外部配置文件 -->
 	<import resource="spring-bean.xml"/>
+	<import resource="spring-schedule.xml"/>
 
 </beans>
