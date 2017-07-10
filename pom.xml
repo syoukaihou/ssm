@@ -56,21 +56,6 @@
             <version>${spring.version}</version>  
         </dependency>
 
-		<!-- 定时任务 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${org.quartz.version}</version>
-        </dependency>
-
-
-
         <!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

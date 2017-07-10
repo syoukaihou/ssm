@@ -46,11 +46,12 @@
 	<!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
     <!-- 配置spring定时任务 -->
-    task:annotation-driven scheduler="scheduler"/>
+    <!--启用注解驱动的定时任务-->
+    <task:annotation-driven scheduler="scheduler"/>
+    <!-- 配置线程池 -->
     <task:scheduler id="scheduler" pool-size="10"/>
 
 	<!-- 引用外部配置文件 -->
 	<import resource="spring-bean.xml"/>
-	<import resource="spring-schedule.xml"/>
 
 </beans>
