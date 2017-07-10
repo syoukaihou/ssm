@@ -21,6 +21,7 @@
     <div><input type="button" value="login" class="login"></div>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+
     <script type="text/javascript">
         $(document.body).ready(function() {
             // 首次获取验证码
