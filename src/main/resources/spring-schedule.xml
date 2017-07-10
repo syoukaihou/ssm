@@ -8,20 +8,49 @@
         <property name="jobClass" value="com.snsprj.quartz.TestJob1"/>
     </bean>
 
-    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <!-- 2.配置作业调度的触发器 -->
+    <!--<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
 
+        <!--<property name="jobDetail" ref="testJob1"/>-->
+        <!--<property name="startDelay" value="0"/>-->
+        <!--<property name="repeatInterval" value="2000"/>-->
+    <!--</bean>-->
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="testJob1"/>
-        <property name="startDelay" value="0"/>
-        <property name="repeatInterval" value="2000"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
     </bean>
+
+    <bean id="testJob2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="com.snsprj.quartz.TestJob2"/>
+        </property>
+        <property name="targetMethod" value="doJob"/>
+    </bean>
+
+    <bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="testJob2"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean>
+
+
+
+
+
+
+
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="simpleTrigger"/>
+                <!--<ref bean="simpleTrigger"/>-->
+                <ref bean="cronTrigger"/>
+                <ref bean="cronTrigger2"/>
             </list>
         </property>
     </bean>
+
+
 
 
 </beans>
