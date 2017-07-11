@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:task="http://www.springframework.org/schema/task"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans
 							http://www.springframework.org/schema/beans/spring-beans.xsd
 							http://www.springframework.org/schema/context
-							http://www.springframework.org/schema/context/spring-context.xsd">
+							http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/task
+                            http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
 	<context:component-scan base-package="com.snsprj.service" />
@@ -74,6 +77,17 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-	
 
+	<!-- 配置spring定时任务 -->
+	<!--启用注解驱动的定时任务-->
+	<task:annotation-driven scheduler="scheduler"/>
+	<!-- 配置线程池 -->
+	<task:scheduler id="scheduler" pool-size="10"/>
+
+    <!--扫描定时任务类-->
+    <context:component-scan base-package="com.snsprj.quartz"/>
+
+
+    <!-- 引用外部配置文件 -->
+    <import resource="spring-bean.xml"/>
 </beans>
