@@ -10,12 +10,15 @@
         <property name="successUrl" value="/user/index"/>
         <property name="filterChainDefinitions">
             <value>
+                <!--url=拦截器[参数]-->
                 <!-- 登录注册post请求 -->
                 /auth/** = anon
                 <!-- 静态资源 -->
                 /resources/** = anon
                 <!-- 验证码 -->
                 /captcha/** = anon
+                <!-- 测试 -->
+                /test/** = anon
 
 
                 /** = authc
