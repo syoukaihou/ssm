@@ -5,6 +5,7 @@ import com.snsprj.common.ServerResponse;
 import com.snsprj.dto.User;
 import com.snsprj.service.IUserAuthService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -43,8 +44,11 @@ public class UserController {
         if(!currentUser.isAuthenticated()){
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
 
-            currentUser.login(usernamePasswordToken);
-
+            try{
+                currentUser.login(usernamePasswordToken);
+            }catch (AuthenticationException ex){
+                System.out.println("登录失败" + ex.getMessage());
+            }
         }
 
         return ServerResponse.createBySuccess();

@@ -1,6 +1,5 @@
 package com.snsprj.shiro;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -10,7 +9,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 /**
  * Created by John on 2017/6/25.
  */
-public class MyRealm extends AuthorizingRealm {
+class MyRealm extends AuthorizingRealm {
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store.  When returning
      * an instance from this method, you might want to consider using an instance of
@@ -61,12 +60,10 @@ public class MyRealm extends AuthorizingRealm {
 
         // 4、根据用户情况，构建AuthenticationInfo对象并返回
         // 以下信息是从数据库中获取的
-        Object principal = username;
+        Object principal = "john";
         Object credentials = "123456";
         String realmName = getName();
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(principal,credentials,realmName);
 
-
-        return simpleAuthenticationInfo;
+        return new SimpleAuthenticationInfo(principal,credentials,realmName);
     }
 }
