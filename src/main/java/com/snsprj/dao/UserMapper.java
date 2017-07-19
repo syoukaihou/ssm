@@ -3,7 +3,6 @@ package com.snsprj.dao;
 import com.snsprj.dto.User;
 
 public interface UserMapper {
-
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
@@ -26,7 +25,7 @@ public interface UserMapper {
     User selectDetailByPrimaryKey(Integer id);
 
     /**
-     * 
+     *
      * @param account account
      * @return User
      */

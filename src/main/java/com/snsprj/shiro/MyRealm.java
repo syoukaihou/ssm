@@ -1,16 +1,25 @@
 package com.snsprj.shiro;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.snsprj.dao.UserMapper;
+import com.snsprj.dto.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by John on 2017/6/25.
  */
 public class MyRealm extends AuthorizingRealm {
+
+
+    @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    UserMapper userMapper;
+
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store.  When returning
      * an instance from this method, you might want to consider using an instance of
@@ -58,15 +67,22 @@ public class MyRealm extends AuthorizingRealm {
         String username = usernamePasswordToken.getUsername();
 
         // 3、从数据库中查询username对应的用户记录
+        User user = userMapper.selectByUsername(username);
+        if(user == null){
+            throw new UnknownAccountException();
+        }
+
 
         // 4、根据用户情况，构建AuthenticationInfo对象并返回
         // 以下信息是从数据库中获取的
-        Object principal = username;
-        Object credentials = "123456";
+        // 加密后的密码
+        String credentials = user.getPassword();
+        // 盐值
+        String salt = user.getSalt();
+
+        ByteSource credentialsSalt = ByteSource.Util.bytes(salt);
         String realmName = getName();
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(principal,credentials,realmName);
 
-
-        return simpleAuthenticationInfo;
+        return new SimpleAuthenticationInfo(username,  credentials,  credentialsSalt,  realmName);
     }
 }

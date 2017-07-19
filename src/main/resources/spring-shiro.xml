@@ -33,7 +33,15 @@
         <property name="realm" ref="myRealm"/>
     </bean>
 
-    <bean id="myRealm" class="com.snsprj.shiro.MyRealm"/>
+    <bean id="myRealm" class="com.snsprj.shiro.MyRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+                <!--加密次数-->
+                <property name="hashIterations" value="64"/>
+            </bean>
+        </property>
+    </bean>
 
 
 

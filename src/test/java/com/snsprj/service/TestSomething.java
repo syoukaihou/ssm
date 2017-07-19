@@ -1,5 +1,6 @@
 package com.snsprj.service;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -28,5 +29,12 @@ public class TestSomething {
 
         String jsonStr = "[{\"unit\":\"元/次\",\"price\":\"158.0\",\"name\":\"腰背推拿\",\"quantity\":1,\"thirdId\":\"6\"}]";
 
+    }
+
+    @Test
+    public void testRandomStr(){
+        String str = RandomStringUtils.randomAscii(16);
+
+        System.out.printf(str);
     }
 }

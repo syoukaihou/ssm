@@ -3,19 +3,17 @@ package com.snsprj.dto;
 import java.util.Date;
 
 public class User {
-
     private Integer id;
 
     private String account;
 
     private String password;
 
+    private String salt;
+
     private Date createdAt;
 
     private Date updatedAt;
-
-    private UserInfo userInfo;
-
 
     public Integer getId() {
         return id;
@@ -41,6 +39,14 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -55,13 +61,5 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
     }
 }
