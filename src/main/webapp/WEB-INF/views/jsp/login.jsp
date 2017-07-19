@@ -46,7 +46,10 @@
                     console.log("请求成功返回！");
 
                     console.log(data);
-                    window.location.href="/ssm/user/index";
+                    if(data.code == 0){
+                        window.location.href="/ssm/user/index";
+                    }
+
                 },
                 error:function(data){
                     alert(data);

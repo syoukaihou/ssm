@@ -49,8 +49,6 @@ public class UserController {
     public ServerResponse<User> postRegister(@RequestParam("username") String username,
                                              @RequestParam("password") String password){
 
-        System.out.println("------->" + username + "===" + password);
-
         User user = null;
         try{
             user = iUserService.register(username,password);
