@@ -61,6 +61,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
                 e.printStackTrace();
             }
         }else{
+            ex.printStackTrace();
             // 其他异常页面返回
             mv.setViewName(PagePath.error500);
         }

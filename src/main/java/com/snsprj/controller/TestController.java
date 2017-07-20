@@ -1,15 +1,24 @@
 package com.snsprj.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.snsprj.common.ServerResponse;
+import com.snsprj.dao.ProductMapper;
 import com.snsprj.dao.UserMapper;
+import com.snsprj.dto.Product;
 import com.snsprj.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 
 /**
  * Created by skh on 2017/7/3.
@@ -22,6 +31,10 @@ public class TestController {
     @Autowired
     @SuppressWarnings("SpringJavaAutowiringInspection")
     private UserMapper userMapper;
+
+    @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    private ProductMapper productMapper;
 
 
     @RequestMapping(value = {"/test/user","test/get/user"})
@@ -51,6 +64,38 @@ public class TestController {
         PageHelper.startPage(1,10);
 
         return ServerResponse.createBySuccess();
+    }
+
+
+
+    @RequestMapping("/test/mybatis/if")
+    @ResponseBody
+    public String testMybatisIf(){
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        Integer vane = 0;
+        String dateStr = "2017-06-29 12:11:40";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date date = null;
+        try {
+            date = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Byte status = 2;
+        List<Product> list = productMapper.selectByUpdatedAt(vane,date,status);
+
+        String ret = null;
+        try {
+            ret = mapper.writeValueAsString(list);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
 

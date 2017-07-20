@@ -212,4 +212,29 @@
     where category_id = #{categoryId} and status = #{status}
     ORDER BY is_top desc , updated_at desc
   </select>
+  
+  <select id="selectByUpdatedAt" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from products
+    <where>
+        <if test="vane gt 0">
+            updated_at &gt; #{date} AND status = #{status}
+            ORDER BY is_top desc , updated_at desc
+        </if>
+        <if test="vane == 0">
+            updated_at = #{date} AND status != #{status}
+            ORDER BY is_top desc , updated_at desc
+        </if>
+        <if test="vane lt 0">
+            updated_at &lt; #{date} AND status = #{status}
+            ORDER BY is_top desc , updated_at desc
+        </if>
+
+    </where>
+  </select>
+
+
 </mapper>
