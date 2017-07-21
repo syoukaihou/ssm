@@ -3,6 +3,7 @@ package com.snsprj.controller;
 import com.snsprj.common.ErrorCode;
 import com.snsprj.common.PagePath;
 import com.snsprj.common.ServerResponse;
+import com.snsprj.common.exception.AlreadyExistsException;
 import com.snsprj.dto.User;
 import com.snsprj.service.IUserService;
 import org.apache.shiro.SecurityUtils;
@@ -53,10 +54,12 @@ public class UserController {
         try{
             user = iUserService.register(username,password);
         }catch (ConstraintViolationException ex){
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
 
-            return ServerResponse.createByError(-1);
+            return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
+
+        }catch (AlreadyExistsException ex){
+
+            return ServerResponse.createByError(ErrorCode.ACCOUNT_ALREADY_EXISTS);
         }
 
 

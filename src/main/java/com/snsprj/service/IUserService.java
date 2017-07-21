@@ -1,5 +1,6 @@
 package com.snsprj.service;
 
+import com.snsprj.common.exception.AlreadyExistsException;
 import com.snsprj.dto.User;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,6 +24,6 @@ public interface IUserService {
      * @return userId
      */
     public User register(@NotBlank(message = "用户名不能为空") String username,
-                            @NotBlank(message = "密码不能为空") String password);
+                            @NotBlank(message = "密码不能为空") String password)throws AlreadyExistsException;
 
 }
