@@ -19,6 +19,8 @@
                 /captcha/** = anon
                 <!-- 测试 -->
                 /test/** = anon
+                <!--网站正在建设中-->
+                /building/** =anon
 
 
                 /** = authc

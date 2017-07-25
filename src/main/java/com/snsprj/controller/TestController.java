@@ -8,12 +8,12 @@ import com.snsprj.dao.ProductMapper;
 import com.snsprj.dao.UserMapper;
 import com.snsprj.dto.Product;
 import com.snsprj.dto.User;
+import com.snsprj.runnable.MyRunable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -98,6 +98,17 @@ public class TestController {
         return ret;
     }
 
+    @RequestMapping("test/runable")
+    @ResponseBody
+    public String testRunable(){
 
+        Runnable runnable = new MyRunable("zhangsan");
+
+        Thread thread = new Thread(runnable);
+
+        thread.start();
+
+        return "执行中。。。。。。。。";
+    }
 
 }

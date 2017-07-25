@@ -91,6 +91,8 @@
     </error-page>
 
 
-  
+    <welcome-file-list>
+        <welcome-file>/building</welcome-file>
+    </welcome-file-list>
   
 </web-app>

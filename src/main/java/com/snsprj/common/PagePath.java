@@ -14,4 +14,6 @@ public final class PagePath {
     public static final String error404 = "jsp/error/error404";
 
     public static final String error500 = "jsp/error/error500";
+
+    public static final String building = "jsp/building/index";
 }
