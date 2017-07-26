@@ -10,6 +10,8 @@ import com.snsprj.dto.Product;
 import com.snsprj.dto.User;
 import com.snsprj.runnable.MyRunable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -109,6 +111,21 @@ public class TestController {
         thread.start();
 
         return "执行中。。。。。。。。";
+    }
+
+    // test redis
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
+
+    @RequestMapping("test/redis")
+    @ResponseBody
+    public String testRedis(){
+
+        redisTemplate.opsForHash().put("user","age","20");
+
+        HashOperations HashOperations = redisTemplate.opsForHash();
+
+        return (String)HashOperations.get("user","age");
     }
 
 }

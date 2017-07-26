@@ -2,6 +2,7 @@ package com.snsprj.service;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
 
 import java.math.BigDecimal;
 
@@ -36,5 +37,16 @@ public class TestSomething {
         String str = RandomStringUtils.randomAscii(16);
 
         System.out.printf(str);
+    }
+
+    @Test
+    public void testRedis(){
+        String host = "123.57.70.80";
+        int port = 6379;
+        String password = "Xhb123456";
+        Jedis jedis = new Jedis(host,port);
+        jedis.auth(password);
+
+        System.out.println("test redis status -----> "+jedis.ping());
     }
 }

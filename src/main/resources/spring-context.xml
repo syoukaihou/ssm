@@ -21,7 +21,8 @@
     
 	
 	<!-- 引入外部属性文件 -->
-	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+	<context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
 	
 	<!-- 定义使用c3p0连接池的数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -85,6 +86,28 @@
     <!--扫描定时任务类-->
     <context:component-scan base-package="com.snsprj.quartz"/>
 
+    <!--配置redis-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" value="${redis.password}"/>
+        <property name="poolConfig" ref="poolConfig"/>
+    </bean>
+    <!--redis操作模板-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+        </property>
+    </bean>
 
     <!-- 引用外部配置文件 -->
     <import resource="spring-bean.xml"/>
