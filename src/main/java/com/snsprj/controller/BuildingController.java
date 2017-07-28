@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BuildingController {
 
-    @RequestMapping("/building")
+    @RequestMapping("/")
     public String building(){
 
         return PagePath.building;

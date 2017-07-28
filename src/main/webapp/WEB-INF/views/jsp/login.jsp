@@ -11,6 +11,9 @@
 <html>
 <head>
     <title>login</title>
+    <script type="text/javascript">
+        var path="${pageContext.request.contextPath}";
+    </script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -39,19 +42,19 @@
     <script type="text/javascript">
         $(document.body).ready(function() {
             // 首次获取验证码
-            $("#imgVerify").attr("src", "/ssm/captcha/img?" + Math.random());
+            $("#imgVerify").attr("src", path + "/captcha/img?" + Math.random());
         });
 
         // 获取验证码
         function getVerify(obj) {
-            obj.src = "/ssm/captcha/img?" + Math.random();
+            obj.src = path + "/captcha/img?" + Math.random();
         }
 
         $("#login").click(function(){
             var username = $("#username").val();
             var password = $("#password").val();
             $.ajax({
-                url:"/ssm/auth/login",
+                url:path + "/auth/login",
                 data:{"username":username,"password":password},
                 type:"post",
                 dataType:"json",
@@ -61,7 +64,7 @@
 
                     console.log(data);
                     if(data.code == 0){
-                        window.location.href="/ssm/user/index";
+                        window.location.href=path + "/user/index";
                     }else if(data.code == 30002){
                         alert("用户名或密码错误！");
                     }

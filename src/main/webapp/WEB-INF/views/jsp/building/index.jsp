@@ -15,6 +15,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
 
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/building/images/favicon.ico" type="image/x-icon"/>
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
@@ -30,7 +31,12 @@
 <!-- banner -->
 <div class="banner">
     <div class="banner-info">
-        <h1>Impressive<span>Under Construction</span></h1>
+        <%--<h1>Impressive<span>Under Construction</span></h1>--%>
+       <div>
+           <img src="${pageContext.request.contextPath}/resources/building/images/logo.png">
+       </div>
+
+
         <h2 style="font-size: 37px;margin: 50px auto 50px;">We Are Coming Very Soon!</h2>
         <div class="main-example">
             <div class="countdown-container" id="main-example"></div>
@@ -133,7 +139,7 @@
             </ul>
         </div>
         <div class="copyright">
-            <p>© 2016 Impressive Under Construction. All rights reserved | Design by <a href="#">hanjuan.com</a></p>
+            <p>© 2017 Factopintal. All rights reserved | Design by <a href="#">factopintal.com</a></p>
         </div>
     </div>
 </div>

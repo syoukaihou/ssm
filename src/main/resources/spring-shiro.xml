@@ -11,6 +11,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--url=拦截器[参数]-->
+                <!--网站根目录-->
+                /= anon
                 <!-- 登录注册post请求 -->
                 /auth/** = anon
                 <!-- 静态资源 -->
@@ -21,7 +23,8 @@
                 /test/** = anon
                 <!--网站正在建设中-->
                 /building/** =anon
-
+                <!--error page-->
+                /error/** = anon
 
                 /** = authc
             </value>
