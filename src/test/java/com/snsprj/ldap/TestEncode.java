@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by john on 2017/8/16.
  */
-public class TestBase64 {
+public class TestEncode {
 
 
     private static final String baseStr = "123456";

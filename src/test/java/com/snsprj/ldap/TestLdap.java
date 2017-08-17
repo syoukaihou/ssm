@@ -6,8 +6,11 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 
 /**
@@ -18,7 +21,11 @@ public class TestLdap {
     private static final String companyUrl = "ldap://192.168.7.241:389";
 
     private static final String partnerUrl = "ldap://192.168.7.180:389";
-
+    
+    private static final String virtualboxUrl = "ldap://192.168.7.184:389";
+    
+    private static final String partnerUsername = "cn=admin,dc=thundersoft,dc=local";
+    private static final String partnerPwd = "thundersoft";
 
     @Test
     public void testSupportedSASLMechanisms() {
@@ -42,13 +49,20 @@ public class TestLdap {
     }
 
     @Test
-    public void test() {
+    public void testLogin() {
 
-        String adminName = "QUARKDATA\\Administrator";
-        String adminPwd = "1qaz2wsx2017!";
+//        String adminName = "QUARKDATA\\Administrator";
+//        String adminPwd = "1qaz2wsx2017!";
+        
+        String adminName = "tongxiangyu@snsprj.com";
+        String adminPwd = "XiaohuaibaoTel13120000287";
+        // tongxiangyu@snsprj.com
+        // XiaohuaibaoTel13120000287
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, companyUrl);
+        
+//        env.put(Context.PROVIDER_URL, companyUrl);
+        env.put(Context.PROVIDER_URL, virtualboxUrl);
         // // LDAP访问安全级别(none,simple,strong)
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, adminName);
@@ -70,4 +84,59 @@ public class TestLdap {
         }
     }
 
+    @Test
+    public void testLdapMD5Encode(){
+
+        String  charset = "UTF-8";
+        
+        // 16位MD5加密
+        String relust16 = DigestUtils.md5Hex(partnerPwd).substring(8,24);
+        
+        System.out.println("16位MD5加密：" + relust16);
+        
+        // base64编码
+        try {
+            byte[] data = Base64.encodeBase64(relust16.getBytes(charset));
+            String result = new String(data,charset);
+            System.out.println("{MD5}" + result);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testMD5Login() {
+        String encodePwd = "{MD5}OWRmNzEyZTMwNmJiMGJhMA==";
+        // Set up environment for creating initial context
+        Hashtable<String, Object> env = new Hashtable<String, Object>(11);
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, partnerUrl);
+
+        // Authenticate as C. User and password "mysecret"
+        env.put(Context.SECURITY_AUTHENTICATION, "DIGEST-MD5");
+
+        env.put(Context.SECURITY_PRINCIPAL, partnerUsername);
+        env.put(Context.SECURITY_CREDENTIALS, encodePwd);
+
+        env.put("com.sun.jndi.ldap.trace.ber", System.out);
+
+        try {
+            // Create initial context
+            DirContext ctx = new InitialDirContext(env);
+
+//            System.out.println(ctx.lookup("ou=NewHires"));
+
+            // do something useful with ctx
+
+            // Close the context when we're done
+            ctx.close();
+        } catch (NamingException e) {
+            //javax.naming.AuthenticationException: [LDAP: error code 49 - SASL(-13): user not found: no secret in database]
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 }
