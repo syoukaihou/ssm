@@ -5,6 +5,9 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+
+import org.junit.Test;
+
 import java.util.Hashtable;
 
 /**
@@ -12,21 +15,23 @@ import java.util.Hashtable;
  */
 public class TestLdap {
 
-    public static void main(String[] args){
-//        testLogin();
-        testSupportedSASLMechanisms();
-    }
+    private static final String companyUrl = "ldap://192.168.7.241:389";
 
-    private static void testSupportedSASLMechanisms(){
-        String LDAP_URL = "ldap://192.168.1.237:389";
+    private static final String partnerUrl = "ldap://192.168.7.180:389";
+
+
+    @Test
+    public void testSupportedSASLMechanisms() {
+
         try {
             // Create initial context
             DirContext ctx = new InitialDirContext();
 
             // Read supportedSASLMechanisms from root DSE
-            Attributes attrs = ctx.getAttributes(
-                    LDAP_URL, new String[]{"supportedSASLMechanisms"});
+            Attributes attrs =
+                    ctx.getAttributes(partnerUrl, new String[] {"supportedSASLMechanisms"});
 
+            // {supportedsaslmechanisms=supportedSASLMechanisms: DIGEST-MD5, CRAM-MD5, NTLM}
             System.out.println(attrs);
 
             // Close the context when we're done
@@ -36,26 +41,33 @@ public class TestLdap {
         }
     }
 
-    private static void testLogin(){
-        String LDAP_URL = "ldap://192.168.1.237:389";
-        String account = "zhangsan"; // 模拟用户名
-        String password = "123456"; // 模拟密码
-            Hashtable<String,String> env = new Hashtable<>();
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
-            env.put(Context.SECURITY_CREDENTIALS, password);
-            // cn=属于哪个组织结构名称，ou=某个组织结构名称下等级位置编号
-            env.put(Context.SECURITY_PRINCIPAL, account);
-            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-            env.put(Context.PROVIDER_URL, LDAP_URL);
-            try {
-                // 连接LDAP进行认证
-                DirContext ctx = new InitialDirContext(env);
-                System.out.println("认证成功");
+    @Test
+    public void test() {
 
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        String adminName = "QUARKDATA\\Administrator";
+        String adminPwd = "1qaz2wsx2017!";
+        Hashtable<String, String> env = new Hashtable<String, String>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, companyUrl);
+        // // LDAP访问安全级别(none,simple,strong)
+        env.put(Context.SECURITY_AUTHENTICATION, "simple");
+        env.put(Context.SECURITY_PRINCIPAL, adminName);
+        env.put(Context.SECURITY_CREDENTIALS, adminPwd);
+        env.put("com.sun.jndi.ldap.connect.timeout", "5000");
+        env.put("java.naming.ldap.attributes.binary", "objectGUID"); // 解决GUID乱码
 
+        try {
+            // 连接LDAP进行认证
+            DirContext ctx = new InitialDirContext(env);
+            System.out.println("认证成功");
+
+            ctx.close();
+        } catch (Exception e) {
+            // javax.naming.AuthenticationException: [LDAP: error code 49 - 80090308: LdapErr:
+            // DSID-0C0903A9, comment: AcceptSecurityContext error, data 52e, v1db0
+            // 用户名或密码错误
+            e.printStackTrace();
+        }
     }
 
 }
