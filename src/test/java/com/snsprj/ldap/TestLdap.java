@@ -35,8 +35,9 @@ public class TestLdap {
             DirContext ctx = new InitialDirContext();
 
             // Read supportedSASLMechanisms from root DSE
-            Attributes attrs =
-                    ctx.getAttributes(partnerUrl, new String[] {"supportedSASLMechanisms"});
+//            Attributes attrs =  ctx.getAttributes(partnerUrl, new String[] {"supportedSASLMechanisms"});
+            
+            Attributes attrs =  ctx.getAttributes(virtualboxUrl, new String[] {"supportedSASLMechanisms"});
 
             // {supportedsaslmechanisms=supportedSASLMechanisms: DIGEST-MD5, CRAM-MD5, NTLM}
             System.out.println(attrs);
@@ -54,8 +55,12 @@ public class TestLdap {
 //        String adminName = "QUARKDATA\\Administrator";
 //        String adminPwd = "1qaz2wsx2017!";
         
-        String adminName = "tongxiangyu@snsprj.com";
-        String adminPwd = "XiaohuaibaoTel13120000287";
+//        String adminName = "tongxiangyu@snsprj.com";
+//        String adminPwd = "XiaohuaibaoTel13120000287";
+        
+        String adminName = "xiaohuaibao@snsprj.com";
+        String adminPwd = "TongxiangyuTel13120000288";
+        
         // tongxiangyu@snsprj.com
         // XiaohuaibaoTel13120000287
         Hashtable<String, String> env = new Hashtable<String, String>();
@@ -90,7 +95,7 @@ public class TestLdap {
         String  charset = "UTF-8";
         
         // 16位MD5加密
-        String relust16 = DigestUtils.md5Hex(partnerPwd).substring(8,24);
+        String relust16 = DigestUtils.md5Hex("TongxiangyuTel13120000288").substring(8,24);
         
         System.out.println("16位MD5加密：" + relust16);
         
@@ -106,17 +111,19 @@ public class TestLdap {
     
     @Test
     public void testMD5Login() {
-        String encodePwd = "{MD5}OWRmNzEyZTMwNmJiMGJhMA==";
+//        String encodePwd = "{MD5}OWRmNzEyZTMwNmJiMGJhMA==";
+        String vbPwd = "{MD5}NWFmNDdkZmNhODY4ZWU5ZQ==";
+        
         // Set up environment for creating initial context
         Hashtable<String, Object> env = new Hashtable<String, Object>(11);
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, partnerUrl);
+        env.put(Context.PROVIDER_URL, virtualboxUrl);
 
         // Authenticate as C. User and password "mysecret"
         env.put(Context.SECURITY_AUTHENTICATION, "DIGEST-MD5");
 
-        env.put(Context.SECURITY_PRINCIPAL, partnerUsername);
-        env.put(Context.SECURITY_CREDENTIALS, encodePwd);
+        env.put(Context.SECURITY_PRINCIPAL, "xiaohuaibao@snsprj.com");
+        env.put(Context.SECURITY_CREDENTIALS, vbPwd);
 
         env.put("com.sun.jndi.ldap.trace.ber", System.out);
 
