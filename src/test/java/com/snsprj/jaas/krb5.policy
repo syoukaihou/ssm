@@ -2,6 +2,7 @@ grant {
 
         permission java.net.SocketPermission "ldap.jnditutorial.org", "connect";
 
+        permission java.security.AllPermission;
         permission javax.security.auth.AuthPermission "createLoginContext.GssExample";
         permission javax.security.auth.AuthPermission "doAs";
 
