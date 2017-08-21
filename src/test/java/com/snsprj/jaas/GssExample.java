@@ -45,7 +45,6 @@ class GssExample {
             lc.login();
 
         } catch (LoginException le) {
-            le.printStackTrace();
             System.err.println("Authentication attempt failed" + le);
             System.exit(-1);
         }catch(Exception e){
