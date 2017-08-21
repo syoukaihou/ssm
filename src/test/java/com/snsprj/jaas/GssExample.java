@@ -26,17 +26,11 @@ class GssExample {
 
     public static void main(String[] args) {
 
-//        System.setProperty("java.security.auth.login.config",
-//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/gsseg_jaas.conf");
-//        System.setProperty("java.security.krb5.conf",
-//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.conf");
-//        System.setProperty("java.security.policy",
-//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.policy");
-
-        System.setProperty("java.security.auth.login.config", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\gsseg_jaas.conf");
-        System.setProperty("java.security.krb5.conf", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\krb5.conf");
-        System.setProperty("java.security.policy", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\krb5.policy");
-        System.setSecurityManager(new SecurityManager());  
+        String path = "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas";
+        System.setProperty("java.security.auth.login.config", path + "/gsseg_jaas.conf");
+        System.setProperty("java.security.krb5.conf", path + "/jaas/krb5.conf");
+        System.setProperty("java.security.policy", path + "/krb5.policy");
+        System.setSecurityManager(new SecurityManager());
 
         // 1. Log in (to Kerberos)
         LoginContext lc = null;
@@ -52,7 +46,7 @@ class GssExample {
         } catch (LoginException le) {
             System.err.println("Authentication attempt failed" + le);
             System.exit(-1);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -82,12 +76,12 @@ class JndiAction implements java.security.PrivilegedAction {
         String dn;
 
         // Set up environment for creating initial context
-        Hashtable<String,String> env = new Hashtable<>(11);
+        Hashtable<String, String> env = new Hashtable<>(11);
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 
         // Must use fully qualified hostname
-        //  env.put(Context.PROVIDER_URL, "ldap://ldap.jnditutorial.org:389/o=JndiTutorial");
+        // env.put(Context.PROVIDER_URL, "ldap://ldap.jnditutorial.org:389/o=JndiTutorial");
         env.put(Context.PROVIDER_URL, "ldap://192.168.1.231:389");
 
         // Request the use of the "GSSAPI" SASL mechanism
