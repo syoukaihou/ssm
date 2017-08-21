@@ -26,12 +26,16 @@ class GssExample {
 
     public static void main(String[] args) {
 
-        System.setProperty("java.security.auth.login.config",
-                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/gsseg_jaas.conf");
-        System.setProperty("java.security.krb5.conf",
-                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.conf");
-        System.setProperty("java.security.policy",
-                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.policy");
+//        System.setProperty("java.security.auth.login.config",
+//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/gsseg_jaas.conf");
+//        System.setProperty("java.security.krb5.conf",
+//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.conf");
+//        System.setProperty("java.security.policy",
+//                "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas/krb5.policy");
+
+        System.setProperty("java.security.auth.login.config", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\gsseg_jaas.conf");
+        System.setProperty("java.security.krb5.conf", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\krb5.conf");
+        System.setProperty("java.security.policy", "D:\\workspace\\idea\\ssm\\src\\test\\java\\com\\snsprj\\jaas\\krb5.policy");
         System.setSecurityManager(new SecurityManager());  
 
         // 1. Log in (to Kerberos)
@@ -43,6 +47,7 @@ class GssExample {
             // You might want to do this in a "for" loop to give
             // user more than one chance to enter correct username/password
             lc.login();
+            System.out.println("登录成功");
 
         } catch (LoginException le) {
             System.err.println("Authentication attempt failed" + le);
@@ -83,7 +88,7 @@ class JndiAction implements java.security.PrivilegedAction {
 
         // Must use fully qualified hostname
         //  env.put(Context.PROVIDER_URL, "ldap://ldap.jnditutorial.org:389/o=JndiTutorial");
-        env.put(Context.PROVIDER_URL, "ldap://192.168.7.184:389");
+        env.put(Context.PROVIDER_URL, "ldap://192.168.1.231:389");
 
         // Request the use of the "GSSAPI" SASL mechanism
         // Authenticate by using already established Kerberos credentials
