@@ -13,7 +13,8 @@ public class KerberosLogin {
     
     public static void main(String [] args){
 
-        String path = "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas0820";
+//        String path = "/home/user/workspace/eclipse/ssm/src/test/java/com/snsprj/jaas0820";
+        String path = "/workspace/idea/ssm/src/test/java/com/snsprj/jaas";
         
         System.setProperty("java.security.auth.login.config", path + "/jaas.conf");
         System.setProperty("java.security.krb5.conf", path + "/krb5.conf");
