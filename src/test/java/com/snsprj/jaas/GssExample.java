@@ -30,9 +30,12 @@ class GssExample {
         String path = "/workspace/idea/ssm/src/test/java/com/snsprj/jaas";
 
 
+
         System.setProperty("java.security.auth.login.config", path + "/gsseg_jaas.conf");
         System.setProperty("java.security.krb5.conf", path + "/krb5.conf");
         System.setProperty("java.security.policy", path + "/krb5.policy");
+
+
         System.setSecurityManager(new SecurityManager());
 
         // 1. Log in (to Kerberos)

@@ -1,5 +1,7 @@
 grant {
 
+        permission java.security.AllPermission;
+
         permission java.net.SocketPermission "ldap.jnditutorial.org", "connect";
 
         permission javax.security.auth.AuthPermission "createLoginContext.kerberosLogin";
