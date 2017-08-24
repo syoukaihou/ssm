@@ -17,11 +17,14 @@ public class JaasAcn {
         String path = "/workspace/idea/ssm/src/test/java/com/snsprj/jaas0822/";
 
         System.setProperty("java.security.auth.login.config", path + "jaas.conf");
-//        System.setProperty("java.security.krb5.conf", path + "krb5.conf");
 
-        System.setProperty("java.security.krb5.realm", "SNSPRJ.CN");
-        // System.setProperty("java.security.krb5.kdc", "192.168.1.175");
-        System.setProperty("java.security.krb5.kdc", "kerberos.snsprj.cn");
+        System.setProperty("java.security.krb5.conf", path + "krb5.conf");
+
+//        System.setProperty("java.security.krb5.realm", "SNSPRJ.COM");
+//        System.setProperty("java.security.krb5.kdc", "kerberos.snsprj.com");
+
+        // sun.security.krb5.debug
+        System.setProperty("sun.security.krb5.debug", "true");
 
         // Obtain a LoginContext, needed for authentication. Tell it
         // to use the LoginModule implementation specified by the

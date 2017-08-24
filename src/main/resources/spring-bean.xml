@@ -36,4 +36,5 @@
 
     <bean id="exceptionHandler" class="com.snsprj.common.exception.DefaultExceptionHandler"/>
 
+    <bean id="testFilter" class="com.snsprj.fifter.MyFilter"/>
 </beans>
