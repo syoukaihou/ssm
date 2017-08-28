@@ -1,14 +1,11 @@
-package com.snsprj.fifter;
+package com.snsprj.filter;
 
 import com.snsprj.dto.User;
 import com.snsprj.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -18,7 +15,7 @@ import java.io.IOException;
 public class MyFilter implements Filter {
 
     @Autowired
-    private IUserService iUserServiceImpl;
+    private IUserService iUserService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,16 +25,7 @@ public class MyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-
-//        HttpServletRequest req = (HttpServletRequest)servletRequest;
-//
-//        ServletContext sc = req.getSession().getServletContext();
-//        XmlWebApplicationContext cxt = (XmlWebApplicationContext) WebApplicationContextUtils.getWebApplicationContext(sc);
-//
-//        if(cxt != null && cxt.getBean("iUserServiceImpl") != null && iUserServiceImpl == null)
-//            iUserServiceImpl = (IUserService) cxt.getBean("iUserServiceImpl");
-
-        User user =  iUserServiceImpl.getUserDetailByPrimaryKey(1);
+        User user =  iUserService.getUserDetailByPrimaryKey(1);
 
         if(user == null){
             System.out.println("null");
@@ -45,6 +33,7 @@ public class MyFilter implements Filter {
             System.out.println("not null" + user.getAccount());
         }
 
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

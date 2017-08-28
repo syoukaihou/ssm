@@ -12,7 +12,11 @@ import java.math.BigDecimal;
  */
 public class TestSomething {
 
-
+    private static String path = "";
+    
+    static {
+        path = "123123";
+    }
     @Test
     public void testBigDecimal(){
 
@@ -49,4 +53,14 @@ public class TestSomething {
 
         System.out.println("test redis status -----> "+jedis.ping());
     }
+    
+    @Test
+    public void testPath(){
+        System.out.println(path);
+    }
+    
+    
+    
+    
+    
 }

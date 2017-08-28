@@ -127,5 +127,18 @@ public class TestController {
 
         return (String)HashOperations.get("user","age");
     }
+    
+    private static String path = "";
+    static {
+        path = "asdfasdf";
+    }
+    
+    @RequestMapping(value = "test/static")
+    @ResponseBody
+    public String testStatic(){
+        
+        System.out.println("path ======" + path);
+        return path;
+    }
 
 }
