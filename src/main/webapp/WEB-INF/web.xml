@@ -27,6 +27,15 @@
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
+	<!-- 配置logback配置文件位置 -->
+	<context-param>
+		<param-name>logbackConfigLoaction</param-name>
+		<param-value>classpath:logback.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+	</listener>
+	
     <!-- 配置shiro -->
     <filter>
         <filter-name>shiroFilter</filter-name>

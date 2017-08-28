@@ -14,6 +14,15 @@ import java.io.IOException;
 @Component
 public class MyFilter implements Filter {
 
+    // insert by xiaohb 20170828 start
+    private static String projectName = "";
+    
+    static {
+        projectName = "xiaohuaibao";
+    }
+    
+    // insert by xiaohb 20170828 end
+
     @Autowired
     private IUserService iUserService;
 
@@ -30,7 +39,7 @@ public class MyFilter implements Filter {
         if(user == null){
             System.out.println("null");
         }else{
-            System.out.println("not null" + user.getAccount());
+            System.out.println("not null===" + user.getAccount() + "===path ==" + projectName);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

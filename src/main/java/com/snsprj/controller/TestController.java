@@ -12,6 +12,7 @@ import com.snsprj.runnable.MyRunable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -121,11 +122,15 @@ public class TestController {
     @ResponseBody
     public String testRedis(){
 
-        redisTemplate.opsForHash().put("user","age","20");
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        hashOperations.put("user","age","20");
+        
+        ValueOperations<String, Object>  valueOperations = redisTemplate.opsForValue();
+        valueOperations.set("name", "foo");
+        
+        System.out.println("name ====" +  valueOperations.get("name") );
 
-        HashOperations HashOperations = redisTemplate.opsForHash();
-
-        return (String)HashOperations.get("user","age");
+        return (String)hashOperations.get("user","age");
     }
     
     private static String path = "";
