@@ -62,14 +62,14 @@ public class TestLdap {
 //        String adminName = "tongxiangyu@snsprj.com";
 //        String adminPwd = "XiaohuaibaoTel13120000287";
         
-//        String adminName = "xiaohuaibao@snsprj.com";
-//        String adminPwd = "TongxiangyuTel13120000288";
+        String adminName = "xiaohuaibao@snsprj.com";
+        String adminPwd = "TongxiangyuTel13120000288";
 
 //        String adminName = "xiaohuaibao@corp.snsprj.com";
 //        String adminPwd = "xiaohuaibao";
 
-        String adminName = "AD\\Administrator";
-        String adminPwd = "Xiaohuaibao010%";
+//        String adminName = "AD\\Administrator";
+//        String adminPwd = "Xiaohuaibao010%";
         
         
         // tongxiangyu@snsprj.com
@@ -78,7 +78,7 @@ public class TestLdap {
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         
 //        env.put(Context.PROVIDER_URL, companyUrl);
-        env.put(Context.PROVIDER_URL, aliUrl);
+        env.put(Context.PROVIDER_URL, virtualboxUrl);
         // // LDAP访问安全级别(none,simple,strong)
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, adminName);

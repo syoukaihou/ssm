@@ -178,6 +178,11 @@
 			<version>1.10</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.3.6</version>
+		</dependency>
 
 
 		<!-- 阿里邮件推送服务 -->
