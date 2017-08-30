@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+<!-- 定义变量 -->
+<!-- 日志文件大小 -->
+<property name="log.max.size" value="20MB"/>
+
+<!-- 控制台输出 -->
+<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>  
+</appender>
+
+<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+	<append>true</append>
+	
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">   
+      <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>   
+      <maxHistory>30</maxHistory>    
+    </rollingPolicy>  
+	
+	<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+		<maxFileSize>${log.max.size}</maxFileSize>
+	</triggeringPolicy>
+	
+	
+	
+	
+	
+	<encoder>
+		<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+	</encoder>
+	
+</appender>
+
+
+<!-- 按照大小切割日志 -->
+
+<!-- 根logger -->
+<root level="debug">
+	<appender-ref ref="stdout"/>
+</root>
+
+<!-- 
+	name：用来指定受此loger约束的某一个包或者具体的某一个类。
+	1、没有配置level，将继承它的上一级<root>的日志级别“debug”。
+	2、addtivity默认为true，将此logger的打印信息向上级传递。
+	3、没有设置appender，此logger本身不打印任何日志信息。
+	4、root接收到下级传递的信息，交给已配置好的名为“stdout”的appender处理。
+ -->
+<logger name="com.snsprj.controller"  addtivity="true">
+</logger>
+
+
+
+
+
+
+
 
 
 </configuration>
