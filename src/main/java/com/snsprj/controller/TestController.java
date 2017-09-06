@@ -9,6 +9,9 @@ import com.snsprj.dao.UserMapper;
 import com.snsprj.dto.Product;
 import com.snsprj.dto.User;
 import com.snsprj.runnable.MyRunable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +32,7 @@ import java.util.List;
 @Controller
 public class TestController {
 
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
     /// TODO test ===================================================
 
     @Autowired
@@ -117,11 +121,12 @@ public class TestController {
     // test redis
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
-
+    
     @RequestMapping("test/redis")
     @ResponseBody
     public String testRedis(){
 
+        logger.info("开始测试redis--------");
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
         hashOperations.put("user","age","20");
         

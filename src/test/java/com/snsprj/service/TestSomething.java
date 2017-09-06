@@ -59,6 +59,19 @@ public class TestSomething {
         System.out.println(path);
     }
     
+    @Test
+    public void testSplit(){
+        String str = "";
+        
+        String [] strArr = str.split("-");
+        
+        if(null != strArr){
+            System.out.println(strArr.length);
+            System.out.println(strArr[0]);
+        }
+        
+    }
+    
     
     
     

@@ -22,7 +22,11 @@ public class TestLdap {
 
     private static final String partnerUrl = "ldap://192.168.7.180:389";
     
-    private static final String virtualboxUrl = "ldap://192.168.7.184:389";
+    private static final String virtualboxUrl = "ldap://192.168.7.87:389";
+    
+    // 104.160.171.94
+//    private static final String sfUrl = "ldap://AD-Ldap-App.int.sfdc.com.cn:389";
+    private static final String sfUrl = "ldap://104.160.171.94:389";
 
     private static final String vmUrl = "ldap://192.168.1.237:389";
     
@@ -41,7 +45,7 @@ public class TestLdap {
             // Read supportedSASLMechanisms from root DSE
 //            Attributes attrs =  ctx.getAttributes(partnerUrl, new String[] {"supportedSASLMechanisms"});
             
-            Attributes attrs =  ctx.getAttributes(virtualboxUrl, new String[] {"supportedSASLMechanisms"});
+            Attributes attrs =  ctx.getAttributes(companyUrl, new String[] {"supportedSASLMechanisms"});
 
             // {supportedsaslmechanisms=supportedSASLMechanisms: DIGEST-MD5, CRAM-MD5, NTLM}
             System.out.println(attrs);
@@ -56,28 +60,12 @@ public class TestLdap {
     @Test
     public void testLogin() {
 
-//        String adminName = "QUARKDATA\\Administrator";
-//        String adminPwd = "1qaz2wsx2017!";
-        
-//        String adminName = "tongxiangyu@snsprj.com";
-//        String adminPwd = "XiaohuaibaoTel13120000287";
-        
-        String adminName = "xiaohuaibao@snsprj.com";
-        String adminPwd = "TongxiangyuTel13120000288";
+        String adminName = "tongxy@snsprj.cn";
+        String adminPwd = "Tongxiangyu88";
 
-//        String adminName = "xiaohuaibao@corp.snsprj.com";
-//        String adminPwd = "xiaohuaibao";
-
-//        String adminName = "AD\\Administrator";
-//        String adminPwd = "Xiaohuaibao010%";
-        
-        
-        // tongxiangyu@snsprj.com
-        // XiaohuaibaoTel13120000287
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         
-//        env.put(Context.PROVIDER_URL, companyUrl);
         env.put(Context.PROVIDER_URL, virtualboxUrl);
         // // LDAP访问安全级别(none,simple,strong)
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
