@@ -99,8 +99,11 @@ public class ADDataSyncImpl implements IADDataSync {
         }
     }
 
-
-
+    /**
+     * 分页获取AD中用户数据
+     * @param ctx LdapContext
+     * @param adDn String
+     */
     public void getAllUser(LdapContext ctx,String adDn){
 
         String searchFilter = "(objectClass=User)";
