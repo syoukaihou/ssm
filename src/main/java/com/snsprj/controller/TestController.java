@@ -13,6 +13,7 @@ import com.snsprj.runnable.MyRunable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -149,6 +150,15 @@ public class TestController {
         
         System.out.println("path ======" + path);
         return path;
+    }
+    
+    @Value("${jdbc.username}")
+    private String username;
+    
+    @RequestMapping(value = "test/properties")
+    @ResponseBody
+    public void testGetProperties(){
+        System.out.println("jdbc 的用户名为===" + username);
     }
 
 }
