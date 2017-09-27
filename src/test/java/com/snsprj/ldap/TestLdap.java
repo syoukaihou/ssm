@@ -22,7 +22,7 @@ public class TestLdap {
 
     private static final String partnerUrl = "ldap://192.168.7.180:389";
     
-    private static final String virtualboxUrl = "ldap://192.168.7.87:389";
+    private static final String virtualboxUrl = "ldap://192.168.7.89:389";
     
     // 104.160.171.94
 //    private static final String sfUrl = "ldap://AD-Ldap-App.int.sfdc.com.cn:389";

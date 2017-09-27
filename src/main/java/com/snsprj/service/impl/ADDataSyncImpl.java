@@ -170,7 +170,7 @@ public class ADDataSyncImpl implements IADDataSync {
     }
 
     public static void main(String [] args){
-        String adUrl = "ldap://192.168.1.237";
+        String adUrl = "ldap://192.168.7.179";
         String username = "tongxy@snsprj.cn";
         String password = "Tongxiangyu88";
         String adDn = "OU=同福客栈酒店管理有限公司,DC=snsprj,DC=cn";

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 
@@ -70,6 +71,21 @@ public class TestSomething {
             System.out.println(strArr[0]);
         }
         
+    }
+    
+    @Test
+    public void testExce(){
+        
+        for(int i = 0;i<10;i++){
+            try{
+                
+                throw new IOException();
+
+            }catch(Exception exception){
+//                exception.printStackTrace();
+            }
+        }
+        System.out.println("=============");
     }
     
     
