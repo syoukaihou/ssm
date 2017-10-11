@@ -60,13 +60,17 @@ public class TestLdap {
     @Test
     public void testLogin() {
 
-        String adminName = "tongxy@snsprj.cn";
-        String adminPwd = "Tongxiangyu88";
+//        String adminName = "tongxy@snsprj.cn";
+//        String adminPwd = "Tongxiangyu88";
+        
+        String adurl = "ldap://192.168.7.204:389";
+        String adminName = "QUARKDATA\\Administrator";
+        String adminPwd = "1qaz2wsx2017!";
 
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         
-        env.put(Context.PROVIDER_URL, virtualboxUrl);
+        env.put(Context.PROVIDER_URL, adurl);
         // // LDAP访问安全级别(none,simple,strong)
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, adminName);
