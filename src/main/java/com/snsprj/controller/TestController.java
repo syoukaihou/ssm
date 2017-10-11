@@ -161,4 +161,10 @@ public class TestController {
         System.out.println("jdbc 的用户名为===" + username);
     }
 
+    @RequestMapping("/test/freemaker")
+    public String testFreemaker(){
+    	
+    	
+    	return "html/index1011";
+    }
 }
