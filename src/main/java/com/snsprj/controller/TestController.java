@@ -20,11 +20,16 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -166,5 +171,23 @@ public class TestController {
     	
     	
     	return "html/index1011";
+    }
+    
+    @RequestMapping("/test/upload")
+    public String  getUploadView(){
+    	return "html/upload";
+    }
+    
+    @RequestMapping("/test/upload/csv")
+    public void testCSV(HttpServletRequest request){
+    	
+    	MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    	
+    	MultipartFile multipartFile = multipartRequest.getFile("file");
+        String sourceName = multipartFile.getOriginalFilename(); // 原始文件名
+        Long size = multipartFile.getSize();
+        String fileType = sourceName.substring(sourceName.lastIndexOf("."));
+        System.out.println("上传的文件名为:"+sourceName+"类型为:"+fileType+"大小："+size);
+    	
     }
 }
