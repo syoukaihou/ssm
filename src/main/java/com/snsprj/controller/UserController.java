@@ -124,7 +124,7 @@ public class UserController {
     public String index(){
 
 
-        return PagePath.index;
+        return PagePath.INDEX;
     }
 
 

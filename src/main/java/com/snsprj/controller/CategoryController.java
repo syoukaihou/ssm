@@ -16,12 +16,13 @@ import javax.validation.Valid;
  * Created by skh on 2017/6/12.
  */
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
     private ICategoryService iCategoryService;
 
-    @RequestMapping(value="/category/add")
+    @RequestMapping(value="/add")
     @ResponseBody
     public ServerResponse<CategoryVo> addCategory(@Valid CategoryVo categoryVo, Errors errors){
 

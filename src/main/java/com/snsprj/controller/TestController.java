@@ -3,6 +3,7 @@ package com.snsprj.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
+import com.snsprj.common.PagePath;
 import com.snsprj.common.ServerResponse;
 import com.snsprj.dao.ProductMapper;
 import com.snsprj.dao.UserMapper;
@@ -27,7 +28,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by skh on 2017/7/3.
  */
 @Controller
+@RequestMapping("/test")
 public class TestController {
 
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -49,8 +53,10 @@ public class TestController {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     private ProductMapper productMapper;
 
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
 
-    @RequestMapping(value = {"/test/user","test/get/user"})
+    @RequestMapping(value = {"/user","get/user"})
     @ResponseBody
     public ServerResponse<User> getUser(){
 
@@ -62,7 +68,7 @@ public class TestController {
     }
 
 
-    @RequestMapping("/test/userdetial")
+    @RequestMapping("/userdetial")
     @ResponseBody
     public ServerResponse<User> getUserDetial(){
 
@@ -81,7 +87,7 @@ public class TestController {
 
 
 
-    @RequestMapping("/test/mybatis/if")
+    @RequestMapping("/mybatis/if")
     @ResponseBody
     public String testMybatisIf(){
 
@@ -111,7 +117,7 @@ public class TestController {
         return ret;
     }
 
-    @RequestMapping("test/runable")
+    @RequestMapping("/runable")
     @ResponseBody
     public String testRunable(){
 
@@ -125,10 +131,9 @@ public class TestController {
     }
 
     // test redis
-    @Autowired
-    RedisTemplate<String,Object> redisTemplate;
+
     
-    @RequestMapping("test/redis")
+    @RequestMapping("/redis")
     @ResponseBody
     public String testRedis(){
 
@@ -149,7 +154,7 @@ public class TestController {
         path = "asdfasdf";
     }
     
-    @RequestMapping(value = "test/static")
+    @RequestMapping(value = "/static")
     @ResponseBody
     public String testStatic(){
         
@@ -160,25 +165,20 @@ public class TestController {
     @Value("${jdbc.username}")
     private String username;
     
-    @RequestMapping(value = "test/properties")
+    @RequestMapping(value = "/properties")
     @ResponseBody
     public void testGetProperties(){
         System.out.println("jdbc 的用户名为===" + username);
     }
 
-    @RequestMapping("/test/freemaker")
+    @RequestMapping("/freemaker")
     public String testFreemaker(){
-    	
-    	
-    	return "html/index1011";
+
+    	return PagePath.INDEX;
     }
     
-    @RequestMapping("/test/upload")
-    public String  getUploadView(){
-    	return "html/upload";
-    }
     
-    @RequestMapping("/test/upload/csv")
+    @RequestMapping("/upload/csv")
     public void testCSV(HttpServletRequest request){
     	
     	MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -190,4 +190,7 @@ public class TestController {
         System.out.println("上传的文件名为:"+sourceName+"类型为:"+fileType+"大小："+size);
     	
     }
+    
+    
+
 }
