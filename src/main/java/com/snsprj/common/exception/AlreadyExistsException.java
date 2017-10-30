@@ -6,7 +6,12 @@ package com.snsprj.common.exception;
  */
 public class AlreadyExistsException extends Exception{
 
-    public AlreadyExistsException(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5872478576289331395L;
+
+	public AlreadyExistsException(){
         super();
     }
 

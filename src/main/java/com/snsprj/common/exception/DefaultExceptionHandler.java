@@ -1,6 +1,5 @@
 package com.snsprj.common.exception;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snsprj.common.PagePath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,7 +45,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
                 Set<ConstraintViolation<?>> constraintViolations =
                         ((ConstraintViolationException) ex).getConstraintViolations();
 
-                Iterator it = constraintViolations.iterator();
+                Iterator<ConstraintViolation<?>> it = constraintViolations.iterator();
 
                 System.out.println("看看有没有东西"+constraintViolations.size());
 
