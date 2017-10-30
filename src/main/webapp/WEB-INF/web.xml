@@ -21,6 +21,7 @@
   	<param-value>
         classpath:spring-context.xml,
         classpath:spring-shiro.xml,
+        classpath:spring-mail.xml,
     </param-value>
   </context-param>
   <listener>
