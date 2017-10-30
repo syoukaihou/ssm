@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @Date 2017年10月30日
  *
  */
-public class MailToolImpl implements MailTool{
+public class MailToolImpl implements IMailTool{
 
     private static final Logger logger = LoggerFactory.getLogger(MailToolImpl.class);
     

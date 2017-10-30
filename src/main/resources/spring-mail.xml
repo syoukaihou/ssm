@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xis="http://www.w3.org/2001/XMLSchema-instance"
        xis:schemaLocation="http://www.springframework.org/schema/beans
-						http://www.springframework.org/schema/beans/spring-beans.xsd">
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- 引入外部属性文件 -->
 	<context:property-placeholder location="classpath:mail.properties" ignore-unresolvable="true"/>
@@ -15,6 +18,10 @@
         <property name="javaMailProperties">
             <props >
                 <prop key="mail.smtp.auth">true</prop>
+                <!-- 启动调试开关 -->  
+                <prop key="mail.debug">true</prop>  
+                <!-- 设置发送延时 -->
+                <prop key="mail.smtp.timeout">0</prop>
             </props>
         </property>
     </bean>

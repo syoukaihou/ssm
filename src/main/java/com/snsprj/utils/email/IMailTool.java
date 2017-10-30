@@ -1,6 +1,6 @@
 package com.snsprj.utils.email;
 
-public interface MailTool {
+public interface IMailTool {
 
 	/**
 	 * 发送邮件
