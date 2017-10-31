@@ -18,20 +18,27 @@ public class TestController {
 
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
-
     @Autowired
     private IMailService iMailService;
-    
+
     @RequestMapping(value = "mail")
     @ResponseBody
-    public void testSendMail(){
-    	
-    	String[] receiver = {"syoukaihou@gmail.com"};
-    	String subject = "重置密码";
-    	String html = "<p>点击链接重置密码！</p>";
-    	
-    	iMailService.htmlMail(receiver, subject, html);
+    public void testSendMail() {
+
+        String[] receiver = { "syoukaihou@gmail.com" };
+        String subject = "重置密码";
+        String html = "<p>点击链接重置密码！</p>";
+
+        iMailService.htmlMail(receiver, subject, html);
     }
-    
+
+    @RequestMapping(value = "log")
+    @ResponseBody
+    public String testLog() {
+        logger.info("测试info log");
+        logger.error("测试error log");
+
+        return "OK";
+    }
 
 }
