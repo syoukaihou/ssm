@@ -5,7 +5,8 @@
     <!-- 日志文件大小 -->
     <property name="log.max.size" value="20MB" />
     <!-- 定义日志文件 输入位置 -->
-    <property name="log.dir" value="D:/logs/ssm" />
+    <!-- <property name="log.dir" value="D:/logs/ssm" /> -->
+    <property name="log.dir" value="/var/webapp/logs/ssm/" />
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="30" />
 

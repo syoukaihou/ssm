@@ -33,7 +33,7 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     *
+     * 返回注册页面
      * @return register page
      */
     @RequestMapping(value = "auth/register",method = {RequestMethod.GET})
@@ -43,6 +43,7 @@ public class UserController {
     }
 
     /**
+     * 
      * post register
      * @return json
      */
@@ -67,7 +68,7 @@ public class UserController {
     }
 
     /**
-     *
+     * 返回登录页面
      * @return login page
      */
     @RequestMapping(value="auth/login",method = {RequestMethod.GET})
@@ -75,46 +76,6 @@ public class UserController {
 
         return PagePath.userLogin;
     }
-
-    /**
-     * post login
-     * @return json
-     */
-    @RequestMapping(value = "auth/login" ,method={RequestMethod.POST})
-    @ResponseBody
-    public ServerResponse<User> postLogin(@RequestParam("username") String username,
-                                      @RequestParam("password") String password){
-
-        // 获取当前的subject
-        Subject currentUser = SecurityUtils.getSubject();
-
-        // 使用session
-        Session session = currentUser.getSession();
-
-        // 判断当前用户是否已被认证
-        if(!currentUser.isAuthenticated()){
-            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
-
-            try{
-                currentUser.login(usernamePasswordToken);
-            } catch (AuthenticationException ex){
-                if(ex instanceof UnknownAccountException || ex instanceof IncorrectCredentialsException){
-
-                    // 用户名或密码错误
-                    return ServerResponse.createByError(ErrorCode.INCORRECT_USERNAME_OR_PASSWORD);
-                }
-
-                // 其他错误，例如：用户被锁定
-                return ServerResponse.createByError(ErrorCode.ACCOUNT_IS_BLOCKED);
-            }
-
-        }
-
-        return ServerResponse.createBySuccess();
-    }
-
-
-
 
     /**
      *
