@@ -19,11 +19,9 @@ import org.springframework.validation.annotation.Validated;
 public class UserServiceImpl implements IUserService{
 
     @Autowired
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     private UserMapper userMapper;
 
-
-
+    
     public User getUserDetailByPrimaryKey(Integer userId){
 
         return userMapper.selectDetailByPrimaryKey(userId);

@@ -1,8 +1,5 @@
 package com.snsprj.filter;
 
-import com.snsprj.dto.User;
-import com.snsprj.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -14,18 +11,6 @@ import java.io.IOException;
 @Component
 public class MyFilter implements Filter {
 
-    // insert by xiaohb 20170828 start
-    private static String projectName = "";
-    
-    static {
-        projectName = "xiaohuaibao";
-    }
-    
-    // insert by xiaohb 20170828 end
-
-    @Autowired
-    private IUserService iUserService;
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -34,13 +19,6 @@ public class MyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        User user =  iUserService.getUserDetailByPrimaryKey(1);
-
-        if(user == null){
-            System.out.println("null");
-        }else{
-            System.out.println("not null===" + user.getAccount() + "===path ==" + projectName);
-        }
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
