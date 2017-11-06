@@ -1,6 +1,7 @@
 package com.snsprj.service.impl;
 
 import com.snsprj.common.Const;
+import com.snsprj.common.ErrorCode;
 import com.snsprj.dao.CategoryMapper;
 import com.snsprj.dto.Category;
 import com.snsprj.service.ICategoryService;
@@ -33,13 +34,13 @@ public class CategoryServiceImpl implements ICategoryService {
             // check parentId is available
             Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, Const.activeStatus);
             if(parentCategory == null){
-                return Const.illegalParentId;
+                return ErrorCode.ILLEGAL_PARENTID;
             }
 
             // limit depth
             int depth = this.getCategoryDepth(parentId);
             if(Const.categoryDepth <= depth){
-                return Const.illegalParentId;
+                return ErrorCode.ILLEGAL_PARENTID;
             }
         }
 
@@ -48,10 +49,12 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setParentId(parentId);
         category.setStatus(Const.activeStatus);
 
-        return categoryMapper.insert(category);
+        categoryMapper.insert(category);
+
+        return Const.ZERO;
     }
 
-    public void getCategoryTree() {
+    public void getCategoryList() {
 
 
         // first: get all parentId=0 records

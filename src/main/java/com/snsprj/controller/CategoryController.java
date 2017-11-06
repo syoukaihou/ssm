@@ -31,7 +31,7 @@ public class CategoryController {
         }
         int result = iCategoryService.insertCategory(categoryVo);
 
-        if(result > 0){
+        if(result == 0){
             return ServerResponse.createBySuccess();
         }else{
             return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);

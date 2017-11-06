@@ -5,9 +5,8 @@ package com.snsprj.common;
  */
 public final class Const {
 
-    // category const parameter start =============================================
-    // illegal category parentId
-    public static final int illegalParentId = -1;
+	public static final Integer ZERO = 0;
+    // category const parameter  ====================== start =======================
 
     // category depth
     public static final int categoryDepth = 5;
@@ -16,11 +15,11 @@ public final class Const {
     public static final byte blockStatus = 0;
 
     public static final byte activeStatus = 1;
-    // category const parameter end  =============================================
+    // category const parameter  ====================== end =======================
 
 
 
-    // session keys definition start =============================================
+    // session keys definition  ====================== start =======================
     public static final String imageCaptchaSessionKey = "imageCaptchaSessionKey";
 
 
@@ -28,5 +27,5 @@ public final class Const {
 
 
 
-    // session keys definition end  =============================================
+    // session keys definition  ====================== end =======================
 }

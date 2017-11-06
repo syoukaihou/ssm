@@ -23,7 +23,7 @@ public class PropertyPlaceholder extends PropertyPlaceholderConfigurer{
         }
     }
 
-    public static Object getProperty(String name) {
+    public static String getProperty(String name) {
         return propertyMap.get(name);
     }
 }

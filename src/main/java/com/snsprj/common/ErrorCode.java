@@ -20,5 +20,9 @@ public final class ErrorCode {
     // 用户名已存在
     public static final int ACCOUNT_ALREADY_EXISTS = 30004;
 
-
+    
+    /**
+     * 父id无效
+     */
+    public static final int ILLEGAL_PARENTID = 40002;
 }
