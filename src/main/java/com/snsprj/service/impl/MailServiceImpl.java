@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.snsprj.properties.PropertyPlaceholder;
 import com.snsprj.service.IMailService;
 import com.snsprj.utils.MyJavaMailSender;
 
@@ -18,11 +19,11 @@ public class MailServiceImpl implements IMailService{
 	public void htmlMail(String[] receiver, String subject, String html){
 		
 		// TODO 从数据库中拿到邮件的配置信息
-		String username = "xxx@163.com";
-		String password = "xxxxxx";
-		String sender = "xxx@163.com";
-		String host = "smtp.163.com";
-		Integer port = 25;
+		String username = (String) PropertyPlaceholder.getProperty("mail.username");
+		String password = (String) PropertyPlaceholder.getProperty("mail.password");
+		String sender = (String) PropertyPlaceholder.getProperty("mail.username");
+		String host = (String) PropertyPlaceholder.getProperty("mail.host");
+		Integer port = Integer.valueOf((String)PropertyPlaceholder.getProperty("mail.port"));
 		
 		MyJavaMailSender javaMailSender = this.initMailSender(host, port, username, password);
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();

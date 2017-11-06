@@ -25,7 +25,7 @@ public class TestController {
     @ResponseBody
     public void testSendMail(){
     	
-    	String[] receiver = {"syoukaihou@gmail.com"};
+    	String[] receiver = {"783520542@qq.com"};
     	String subject = "重置密码";
     	 
     	// 正文  
