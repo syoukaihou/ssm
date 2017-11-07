@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.snsprj.properties.PropertyPlaceholder;
+import com.snsprj.common.PropertyPlaceholder;
 import com.snsprj.service.IMailService;
 import com.snsprj.utils.MyJavaMailSender;
 

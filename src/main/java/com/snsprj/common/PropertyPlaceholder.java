@@ -1,4 +1,4 @@
-package com.snsprj.properties;
+package com.snsprj.common;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
+/**
+ * properties文件属性读取工具类，依赖spring。
+ * @author skh
+ * @Date 2017年11月7日
+ *
+ */
 public class PropertyPlaceholder extends PropertyPlaceholderConfigurer{
 
 	private static Map<String,String> propertyMap;
