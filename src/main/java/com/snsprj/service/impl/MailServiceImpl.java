@@ -26,6 +26,7 @@ public class MailServiceImpl implements IMailService {
 	@Autowired
 	private FreeMarkerConfigurer freeMarkerConfigurer;
 
+	@Override
 	public void htmlMail(String[] receiver, String subject, String html) {
 
 		// TODO 从数据库中拿到邮件的配置信息
@@ -101,6 +102,7 @@ public class MailServiceImpl implements IMailService {
 	 * @param templateName 模板名称
 	 * @return
 	 */
+	@Override
 	public String getMailText(Map<String,String> map, String templateName) {
 		
 		String html = "";
