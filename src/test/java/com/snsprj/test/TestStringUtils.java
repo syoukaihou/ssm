@@ -13,4 +13,15 @@ public class TestStringUtils {
 		
 		System.out.println(ret);
 	}
+	
+	@Test
+	public void testSubstringAfterLast(){
+		String email = "asfg@daf@outlook.com.cn";
+		
+		String ret1 = StringUtils.substringAfterLast(email, "@");
+		String ret2 = StringUtils.substringAfter(email, "@");
+		
+		System.out.println("ret1=" + ret1);
+		System.out.println("ret2=" + ret2);
+	}
 }

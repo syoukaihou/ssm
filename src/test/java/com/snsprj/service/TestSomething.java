@@ -4,7 +4,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 
@@ -13,11 +12,7 @@ import java.math.BigDecimal;
  */
 public class TestSomething {
 
-    private static String path = "";
-    
-    static {
-        path = "123123";
-    }
+
     @Test
     public void testBigDecimal(){
 
@@ -30,12 +25,6 @@ public class TestSomething {
         System.out.println(ret);
     }
 
-    @Test
-    public void testJsonArray(){
-
-        String jsonStr = "[{\"unit\":\"元/次\",\"price\":\"158.0\",\"name\":\"腰背推拿\",\"quantity\":1,\"thirdId\":\"6\"}]";
-
-    }
 
     @Test
     public void testRandomStr(){
@@ -54,42 +43,12 @@ public class TestSomething {
 
         System.out.println("test redis status -----> "+jedis.ping());
     }
-    
-    @Test
-    public void testPath(){
-        System.out.println(path);
-    }
-    
-    @Test
-    public void testSplit(){
-        String str = "";
-        
-        String [] strArr = str.split("-");
-        
-        if(null != strArr){
-            System.out.println(strArr.length);
-            System.out.println(strArr[0]);
-        }
-        
-    }
-    
-    @Test
-    public void testExce(){
-        
-        for(int i = 0;i<10;i++){
-            try{
-                
-                throw new IOException();
 
-            }catch(Exception exception){
-//                exception.printStackTrace();
-            }
-        }
-        System.out.println("=============");
-    }
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 }
