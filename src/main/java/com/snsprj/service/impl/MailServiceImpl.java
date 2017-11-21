@@ -5,9 +5,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -16,6 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import com.snsprj.common.PropertyPlaceholder;
 import com.snsprj.service.IMailService;
 import com.snsprj.utils.MyJavaMailSender;
+import com.sun.mail.smtp.SMTPAddressFailedException;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -25,9 +31,19 @@ public class MailServiceImpl implements IMailService {
 
 	@Autowired
 	private FreeMarkerConfigurer freeMarkerConfigurer;
+	
+	private Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
-	@Override
-	public void htmlMail(String[] receiver, String subject, String html) {
+	/**
+	 * 
+	 * @Author skh
+	 * @Date 2017年11月21日
+	 *
+	 * @param receiver
+	 * @param subject
+	 * @param html
+	 */
+	private void htmlMail(String[] receiver, String subject, String html) {
 
 		// TODO 从数据库中拿到邮件的配置信息
 		String username = PropertyPlaceholder.getProperty("mail.username");
@@ -38,6 +54,7 @@ public class MailServiceImpl implements IMailService {
 		boolean enableSSL = Boolean.parseBoolean(PropertyPlaceholder.getProperty("mail.smtp.ssl.enable"));
 
 		MyJavaMailSender javaMailSender = this.initMailSender(host, port, username, password, enableSSL);
+		
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper messageHelper;
 		try {
@@ -93,29 +110,28 @@ public class MailServiceImpl implements IMailService {
 		return mailSender;
 	}
 
-	/**
-	 * 填充邮件模板，获得邮件内容字符串
-	 * @Author skh
-	 * @Date 2017年11月8日
-	 *
-	 * @param map
-	 * @param templateName 模板名称
-	 * @return
-	 */
 	@Override
-	public String getMailText(Map<String,String> map, String templateName) {
+	public void sendMailByTemplate(String[] receiver, String subject,  Map<String,String> map, String templateName) {
 		
-		String html = "";
+		String html;
 		try {
 
 			Template template = freeMarkerConfigurer.getConfiguration().getTemplate(templateName);
 			html = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+			
+			this.htmlMail(receiver, subject, html);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (TemplateException e) {
 			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+			if (e instanceof MailSendException) {
+				logger.error("Invalid Addresses-->" + StringUtils.join(receiver,","));
+			}else{
+				logger.error("unkonw exception");
+			}
 		}
-		return html;
 	}
 }

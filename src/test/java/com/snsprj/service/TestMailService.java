@@ -16,8 +16,8 @@ public class TestMailService extends BaseJunit4Test {
 	@Test
 	public void testSendMail() {
 
-		String mail = "783520542@qq.com";
-		String[] receiver = { mail };
+		String mail = "zhaijt@thundersoft.com";
+		String[] receiver = { mail,"sssss@thundersoft.com" };
 		String subject = "重置密码";
 
 		Map<String, String> map = new HashMap<>();
@@ -27,8 +27,7 @@ public class TestMailService extends BaseJunit4Test {
 
 		String templateName = "userActive.ftl";
 
-		String htmlContent = iMailService.getMailText(map, templateName);
+		iMailService.sendMailByTemplate(receiver, subject, map, templateName);
 
-		iMailService.htmlMail(receiver, subject, htmlContent);
 	}
 }

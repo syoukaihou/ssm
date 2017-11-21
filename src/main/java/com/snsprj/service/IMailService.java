@@ -18,16 +18,19 @@ public interface IMailService {
 	 * @param subject
 	 * @param html
 	 */
-	public void htmlMail(String[] receiver, String subject, String html);
+//	public void htmlMail(String[] receiver, String subject, String html);
 	
+
 	/**
-	 * 填充邮件模板，获得邮件内容字符串
+	 * 使用模板发送邮件
 	 * @Author skh
-	 * @Date 2017年11月8日
+	 * @Date 2017年11月21日
 	 *
-	 * @param map
+	 * @param receiver 收件人
+	 * @param subject 邮件主题
+	 * @param map 模板填充数据
 	 * @param templateName 模板名称
 	 * @return
 	 */
-	public String getMailText(Map<String,String> map, String templateName);
+	public void sendMailByTemplate(String[] receiver, String subject,  Map<String,String> map, String templateName);
 }
