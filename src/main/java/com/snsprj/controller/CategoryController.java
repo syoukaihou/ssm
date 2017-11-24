@@ -4,6 +4,9 @@ import com.snsprj.common.ErrorCode;
 import com.snsprj.common.ServerResponse;
 import com.snsprj.service.ICategoryService;
 import com.snsprj.vo.CategoryVo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -19,21 +22,23 @@ import javax.validation.Valid;
 @RequestMapping("/category")
 public class CategoryController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+
     @Autowired
     private ICategoryService iCategoryService;
 
-    @RequestMapping(value="/add")
+    @RequestMapping(value = "/add")
     @ResponseBody
-    public ServerResponse<CategoryVo> addCategory(@Valid CategoryVo categoryVo, Errors errors){
+    public ServerResponse<CategoryVo> addCategory(@Valid CategoryVo categoryVo, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
         }
         int result = iCategoryService.insertCategory(categoryVo);
 
-        if(result == 0){
+        if (result == 0) {
             return ServerResponse.createBySuccess();
-        }else{
+        } else {
             return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
         }
 

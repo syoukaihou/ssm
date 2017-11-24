@@ -2,6 +2,9 @@ package com.snsprj.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.snsprj.common.Const;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,14 +22,16 @@ import java.io.IOException;
  * Created by skh on 2017/6/21.
  */
 @Controller
-@RequestMapping(value={"/captcha"})
+@RequestMapping(value = {"/captcha"})
 public class CaptchaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CaptchaController.class);
 
     @Autowired
     private Producer captchaProducer;
 
     @RequestMapping("img")
-    public void getImgCaptcha(HttpServletRequest request, HttpServletResponse response){
+    public void getImgCaptcha(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession httpSession = request.getSession();
 
@@ -41,7 +46,7 @@ public class CaptchaController {
 
         String capText = captchaProducer.createText();
 
-        httpSession.setAttribute(Const.imageCaptchaSessionKey,capText);
+        httpSession.setAttribute(Const.imageCaptchaSessionKey, capText);
 
         BufferedImage bi = captchaProducer.createImage(capText);
 

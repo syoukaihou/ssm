@@ -7,6 +7,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,42 +30,46 @@ import com.snsprj.dto.User;
 @RequestMapping("/auth")
 public class AuthController {
 
-	/**
-	 * post login
-	 * 
-	 * @return json
-	 */
-	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	@ResponseBody
-	public ServerResponse<User> postLogin(@RequestParam("username") String username,
-			@RequestParam("password") String password) {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-		// 获取当前的subject
-		Subject currentUser = SecurityUtils.getSubject();
+    /**
+     * post login
+     * 
+     * @return json
+     */
+    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    @ResponseBody
+    public ServerResponse<User> postLogin(@RequestParam("username") String username,
+            @RequestParam("password") String password) {
 
-		// 使用session
-		Session session = currentUser.getSession();
+        // 获取当前的subject
+        Subject currentUser = SecurityUtils.getSubject();
 
-		// 判断当前用户是否已被认证
-		if (!currentUser.isAuthenticated()) {
+        // 使用session
+        Session session = currentUser.getSession();
 
-			UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
+        // 判断当前用户是否已被认证
+        if (!currentUser.isAuthenticated()) {
 
-			try {
+            UsernamePasswordToken usernamePasswordToken =
+                    new UsernamePasswordToken(username, password);
 
-				currentUser.login(usernamePasswordToken);
-			} catch (AuthenticationException ex) {
+            try {
 
-				if (ex instanceof UnknownAccountException || ex instanceof IncorrectCredentialsException) {
-					// 用户名或密码错误
-					return ServerResponse.createByError(ErrorCode.INCORRECT_USERNAME_OR_PASSWORD);
-				}
+                currentUser.login(usernamePasswordToken);
+            } catch (AuthenticationException ex) {
 
-				// 其他错误，例如：用户被锁定
-				return ServerResponse.createByError(ErrorCode.ACCOUNT_IS_BLOCKED);
-			}
-		}
+                if (ex instanceof UnknownAccountException
+                        || ex instanceof IncorrectCredentialsException) {
+                    // 用户名或密码错误
+                    return ServerResponse.createByError(ErrorCode.INCORRECT_USERNAME_OR_PASSWORD);
+                }
 
-		return ServerResponse.createBySuccess();
-	}
+                // 其他错误，例如：用户被锁定
+                return ServerResponse.createByError(ErrorCode.ACCOUNT_IS_BLOCKED);
+            }
+        }
+
+        return ServerResponse.createBySuccess();
+    }
 }
