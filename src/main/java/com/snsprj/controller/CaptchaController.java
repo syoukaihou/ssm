@@ -1,7 +1,7 @@
 package com.snsprj.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.snsprj.common.Const;
+import com.snsprj.common.ConstCode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class CaptchaController {
 
         String capText = captchaProducer.createText();
 
-        httpSession.setAttribute(Const.imageCaptchaSessionKey, capText);
+        httpSession.setAttribute(ConstCode.SESSION_KEY_IMAGE_CAPTCHA, capText);
 
         BufferedImage bi = captchaProducer.createImage(capText);
 

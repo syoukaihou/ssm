@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import com.snsprj.common.ConstCode;
+import com.snsprj.common.ErrorCode;
 import com.snsprj.common.PropertyPlaceholder;
 import com.snsprj.service.IMailService;
 import com.snsprj.utils.MyJavaMailSender;
@@ -106,7 +108,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Override
-    public void sendMailByTemplate(String[] receiver, String subject, Map<String, String> map,
+    public Integer sendMailByTemplate(String[] receiver, String subject, Map<String, String> map,
             String templateName) {
 
         String html;
@@ -117,16 +119,21 @@ public class MailServiceImpl implements IMailService {
 
             this.htmlMail(receiver, subject, html);
 
+            return ConstCode.SUCCESS;
         } catch (IOException e) {
             e.printStackTrace();
+            return ErrorCode.INTERNAL_SERVER_ERROR;
         } catch (TemplateException e) {
             e.printStackTrace();
+            return ErrorCode.INTERNAL_SERVER_ERROR;
         } catch (Exception e) {
             e.printStackTrace();
             if (e instanceof MailSendException) {
                 logger.error("Invalid Addresses-->" + StringUtils.join(receiver, ","));
+                return ErrorCode.EMAIL_INVALID_ADDRESS;
             } else {
                 logger.error("unkonw exception");
+                return ErrorCode.INTERNAL_SERVER_ERROR;
             }
         }
     }

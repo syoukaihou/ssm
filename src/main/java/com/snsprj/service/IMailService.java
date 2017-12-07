@@ -32,5 +32,5 @@ public interface IMailService {
 	 * @param templateName 模板名称
 	 * @return
 	 */
-	public void sendMailByTemplate(String[] receiver, String subject,  Map<String,String> map, String templateName);
+	public Integer sendMailByTemplate(String[] receiver, String subject,  Map<String,String> map, String templateName);
 }

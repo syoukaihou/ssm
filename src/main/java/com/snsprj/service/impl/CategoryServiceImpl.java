@@ -1,6 +1,6 @@
 package com.snsprj.service.impl;
 
-import com.snsprj.common.Const;
+import com.snsprj.common.ConstCode;
 import com.snsprj.common.ErrorCode;
 import com.snsprj.dao.CategoryMapper;
 import com.snsprj.dto.Category;
@@ -32,14 +32,14 @@ public class CategoryServiceImpl implements ICategoryService {
 
         if(parentId != 0){
             // check parentId is available
-            Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, Const.activeStatus);
+            Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, ConstCode.CATEGORY_STATUS_ACTIVE);
             if(parentCategory == null){
                 return ErrorCode.ILLEGAL_PARENTID;
             }
 
             // limit depth
             int depth = this.getCategoryDepth(parentId);
-            if(Const.categoryDepth <= depth){
+            if(ConstCode.CATEGORY_DEPTH <= depth){
                 return ErrorCode.ILLEGAL_PARENTID;
             }
         }
@@ -47,18 +47,18 @@ public class CategoryServiceImpl implements ICategoryService {
         Category category = new Category();
         category.setCategoryName(name);
         category.setParentId(parentId);
-        category.setStatus(Const.activeStatus);
+        category.setStatus(ConstCode.CATEGORY_STATUS_ACTIVE);
 
         categoryMapper.insert(category);
 
-        return Const.ZERO;
+        return ConstCode.ZERO;
     }
 
     public void getCategoryList() {
 
 
         // first: get all parentId=0 records
-        List<Category> categoryList = categoryMapper.selectByParentId(0, Const.activeStatus);
+        List<Category> categoryList = categoryMapper.selectByParentId(0, ConstCode.CATEGORY_STATUS_ACTIVE);
 
         // second: traverse list
         for (int index = 0; index < categoryList.size(); index++) {
@@ -78,7 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
      */
     private int getCategoryDepth(int categoryId){
 
-        Category category = categoryMapper.selectByPrimaryKey(categoryId,Const.activeStatus);
+        Category category = categoryMapper.selectByPrimaryKey(categoryId,ConstCode.CATEGORY_STATUS_ACTIVE);
 
         int parentId = category.getParentId();
 

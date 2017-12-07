@@ -27,7 +27,8 @@ public class TestMailService extends BaseJunit4Test {
 
 		String templateName = "userActive.ftl";
 
-		iMailService.sendMailByTemplate(receiver, subject, map, templateName);
+		Integer resultCode = iMailService.sendMailByTemplate(receiver, subject, map, templateName);
 
+		System.out.println(resultCode);
 	}
 }
