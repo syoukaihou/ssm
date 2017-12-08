@@ -49,6 +49,7 @@
 
 	<!-- 静态资源 -->
 	<mvc:default-servlet-handler/>
+	<mvc:resources mapping="/resources/csv/**" location="/resources/csv/" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving
 		up static resources in the ${webappRoot}/resources directory -->
