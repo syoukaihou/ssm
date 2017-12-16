@@ -21,10 +21,9 @@ import com.snsprj.dto.User;
 
 /**
  * 登录认证
- * 
+ *
  * @author skh
  * @Date 2017年11月1日
- *
  */
 @Controller
 @RequestMapping("/auth")
@@ -34,13 +33,13 @@ public class AuthController {
 
     /**
      * post login
-     * 
+     *
      * @return json
      */
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
     @ResponseBody
     public ServerResponse<User> postLogin(@RequestParam("username") String username,
-            @RequestParam("password") String password) {
+                                          @RequestParam("password") String password) {
 
         // 获取当前的subject
         Subject currentUser = SecurityUtils.getSubject();

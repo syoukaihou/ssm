@@ -26,14 +26,14 @@ public class ProductController {
 
     @RequestMapping("list")
     @ResponseBody
-    public ServerResponse<PageInfo> getProductList(@Min(value = 0,message = ("category_id错误！")) Integer category_id,
-                                                   @NotNull Integer page_num){
+    public ServerResponse<PageInfo> getProductList(@Min(value = 0, message = ("category_id错误！")) Integer category_id,
+                                                   @NotNull Integer page_num) {
 
         // TODO 若 categoryId=0 则显示所有商品
 
         Byte status = 1;
 
-        PageInfo page = iProductService.getProductByCategoryId(category_id,status,page_num,10);
+        PageInfo page = iProductService.getProductByCategoryId(category_id, status, page_num, 10);
 
 
         return ServerResponse.createBySuccess(page);

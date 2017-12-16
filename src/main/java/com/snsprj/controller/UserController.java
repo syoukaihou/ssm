@@ -34,31 +34,32 @@ public class UserController {
 
     /**
      * 返回注册页面
+     *
      * @return register page
      */
-    @RequestMapping(value = "auth/register",method = {RequestMethod.GET})
-    public String getRegister(){
+    @RequestMapping(value = "auth/register", method = {RequestMethod.GET})
+    public String getRegister() {
 
         return PagePath.register;
     }
 
     /**
-     * 
      * post register
+     *
      * @return json
      */
-    @RequestMapping(value = "auth/register",method = {RequestMethod.POST})
+    @RequestMapping(value = "auth/register", method = {RequestMethod.POST})
     public ServerResponse<User> postRegister(@RequestParam("username") String username,
-                                             @RequestParam("password") String password){
+                                             @RequestParam("password") String password) {
 
         User user = null;
-        try{
-            user = iUserService.register(username,password);
-        }catch (ConstraintViolationException ex){
+        try {
+            user = iUserService.register(username, password);
+        } catch (ConstraintViolationException ex) {
 
             return ServerResponse.createByError(ErrorCode.ILLEGAL_ARGUMENT);
 
-        }catch (AlreadyExistsException ex){
+        } catch (AlreadyExistsException ex) {
 
             return ServerResponse.createByError(ErrorCode.ACCOUNT_ALREADY_EXISTS);
         }
@@ -69,25 +70,24 @@ public class UserController {
 
     /**
      * 返回登录页面
+     *
      * @return login page
      */
-    @RequestMapping(value="auth/login",method = {RequestMethod.GET})
-    public String getLogin(){
+    @RequestMapping(value = "auth/login", method = {RequestMethod.GET})
+    public String getLogin() {
 
         return PagePath.userLogin;
     }
 
     /**
-     *
      * @return user index page
      */
-    @RequestMapping(value = "/user/index", method={RequestMethod.GET})
-    public String index(){
+    @RequestMapping(value = "/user/index", method = {RequestMethod.GET})
+    public String index() {
 
 
         return PagePath.INDEX;
     }
-
 
 
 }

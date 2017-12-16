@@ -31,8 +31,8 @@ public class RegularExpressionUtil {
 	 * @Author skh
 	 * @Date 2017年11月21日
 	 *
-	 * @param mail
-	 * @return
+	 * @param checkStr String
+	 * @return boolean
 	 */
 	public static boolean isMatch(String checkStr,String regEx){
 		
