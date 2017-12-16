@@ -10,12 +10,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.alibaba.fastjson.JSONObject;
 import com.snsprj.base.BaseControllerTest;
 
-public class TestTestController extends BaseControllerTest {
+public class TestDemoController extends BaseControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private TestController testController;
+    private DemoController testController;
 
     @Before
     public void setUp() throws Exception {

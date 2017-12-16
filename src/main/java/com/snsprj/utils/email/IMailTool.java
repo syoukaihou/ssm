@@ -7,7 +7,7 @@ public interface IMailTool {
 	 * @Author skh
 	 * @Date 2017年10月30日
 	 *
-	 * @param mail
+	 * @param mail Mail
 	 * @return
 	 */
 	public boolean send(Mail mail);
