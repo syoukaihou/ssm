@@ -17,7 +17,6 @@ public class MyRealm extends AuthorizingRealm {
 
 
     @Autowired
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     UserMapper userMapper;
 
     /**

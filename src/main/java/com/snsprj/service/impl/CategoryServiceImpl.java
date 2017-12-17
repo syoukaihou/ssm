@@ -18,7 +18,6 @@ import java.util.List;
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     private CategoryMapper categoryMapper;
 
 

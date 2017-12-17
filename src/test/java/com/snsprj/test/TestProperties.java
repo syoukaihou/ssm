@@ -1,7 +1,6 @@
 package com.snsprj.test;
 
 import org.junit.Test;
-import org.springframework.util.Assert;
 
 import com.snsprj.base.BaseJunit4Test;
 import com.snsprj.common.PropertyPlaceholder;

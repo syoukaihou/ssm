@@ -17,7 +17,6 @@ import java.util.List;
 public class ProductServiceImpl implements IProductService{
 
     @Autowired
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     private ProductMapper productMapper;
 
     /**

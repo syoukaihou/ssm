@@ -41,6 +41,7 @@ public class TestSomething {
         Jedis jedis = new Jedis(host,port);
         jedis.auth(password);
 
+        jedis.close();
         System.out.println("test redis status -----> "+jedis.ping());
     }
 
