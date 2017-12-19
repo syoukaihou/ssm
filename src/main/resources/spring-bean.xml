@@ -35,8 +35,6 @@
 	<bean
 		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
 
-	<bean id="exceptionHandler" class="com.snsprj.common.exception.DefaultExceptionHandler" />
-
 	<bean id="testFilter" class="com.snsprj.filter.MyFilter" />
 
 	<!-- 配置代码读取properties文件 -->

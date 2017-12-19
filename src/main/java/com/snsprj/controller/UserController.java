@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.snsprj.common.ErrorCode;
-import com.snsprj.common.PagePath;
 import com.snsprj.common.ServerResponse;
 import com.snsprj.common.exception.AlreadyExistsException;
 import com.snsprj.dto.User;
@@ -24,17 +23,6 @@ public class UserController {
 
     @Autowired
     private IUserService iUserService;
-
-    /**
-     * 返回注册页面
-     *
-     * @return register page
-     */
-    @RequestMapping(value = "auth/register", method = {RequestMethod.GET})
-    public String getRegister() {
-
-        return PagePath.register;
-    }
 
     /**
      * post register
@@ -57,30 +45,7 @@ public class UserController {
             return ServerResponse.createByError(ErrorCode.ACCOUNT_ALREADY_EXISTS);
         }
 
-
         return ServerResponse.createBySuccess(user);
     }
-
-    /**
-     * 返回登录页面
-     *
-     * @return login page
-     */
-    @RequestMapping(value = "auth/login", method = {RequestMethod.GET})
-    public String getLogin() {
-
-        return PagePath.userLogin;
-    }
-
-    /**
-     * @return user index page
-     */
-    @RequestMapping(value = "/user/index", method = {RequestMethod.GET})
-    public String index() {
-
-
-        return PagePath.INDEX;
-    }
-
 
 }

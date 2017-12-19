@@ -44,7 +44,7 @@ public class AuthController {
         // 获取当前的subject
         Subject currentUser = SecurityUtils.getSubject();
 
-        // 使用session
+        // 使用 shiro session
         Session session = currentUser.getSession();
 
         // 判断当前用户是否已被认证

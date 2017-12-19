@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:task="http://www.springframework.org/schema/task"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
 							http://www.springframework.org/schema/beans/spring-beans.xsd
 							http://www.springframework.org/schema/context
 							http://www.springframework.org/schema/context/spring-context.xsd
                             http://www.springframework.org/schema/task
                             http://www.springframework.org/schema/task/spring-task.xsd">
 
-	<!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
-	<context:component-scan base-package="com.snsprj.service" />
-	
-	<!-- AutowiredAnnotationBeanPostProcessor,
-		CommonAnnotationBeanPostProcessor,
-		PersistenceAnnotationBeanPostProcessor,
-		RequiredAnnotationBeanPostProcessor -->
-    <!-- <context:annotation-config /> -->
-    
-	
-	<!-- 引入外部属性文件 -->
-	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
-	<context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
-	
-	<!-- 定义使用c3p0连接池的数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${jdbc.driverClass}"/>
-		<property name="jdbcUrl" value="${jdbc.url}"/>
-		<property name="user" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>
-	
-	<!-- 整合spring与mybatis -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		
-		<!-- 自动扫描mapping.xml文件，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
-		<property name="mapperLocations" value="classpath:com/snsprj/mapper/*.xml"/>
-		
-		
-		<property name="typeAliasesPackage" value="com.snsprj.dto"/>
+    <!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 
+        移除了 -->
+    <context:component-scan base-package="com.snsprj.service" />
 
-		<!-- pageHelper分页插件-->
+    <!-- AutowiredAnnotationBeanPostProcessor, CommonAnnotationBeanPostProcessor, 
+        PersistenceAnnotationBeanPostProcessor, RequiredAnnotationBeanPostProcessor -->
+    <!-- <context:annotation-config /> -->
+
+
+    <!-- 引入外部属性文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"
+        ignore-unresolvable="true" />
+    <context:property-placeholder location="classpath:redis.properties"
+        ignore-unresolvable="true" />
+
+    <!-- 定义使用c3p0连接池的数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClass}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <!-- 整合spring与mybatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+
+        <!-- 自动扫描mapping.xml文件，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值。 -->
+        <property name="mapperLocations" value="classpath:com/snsprj/mapper/*.xml" />
+
+        <property name="typeAliasesPackage" value="com.snsprj.dto" />
+
+        <!-- pageHelper分页插件 -->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
@@ -59,69 +58,56 @@
                 </bean>
             </array>
         </property>
-	</bean>
+    </bean>
 
-	<!-- scan for mappers and let them be autowired -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.snsprj.dao"/>
-		
-		<!-- Specifies which {@code SqlSessionFactory} to use in the case that there is
-   			 more than one in the spring context. Usually this is only needed when you
-   			 have more than one datasource. -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-	</bean>
-	
-	<!-- 配置数据库事务 -->
-	<bean id="transactionManager" 
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.snsprj.dao" />
 
-	<!-- 配置spring定时任务 -->
-	<!--启用注解驱动的定时任务-->
-	<task:annotation-driven scheduler="scheduler"/>
-	<!-- 配置线程池 -->
-	<task:scheduler id="scheduler" pool-size="10"/>
+        <!-- Specifies which {@code SqlSessionFactory} to use in the case 
+            that there is more than one in the spring context. Usually this is only needed 
+            when you have more than one datasource. -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
 
-    <!--扫描定时任务类-->
-    <context:component-scan base-package="com.snsprj.quartz"/>
+    <!-- 配置数据库事务 -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
-    <!--配置redis-->
+    <!-- 配置spring定时任务 -->
+    <!--启用注解驱动的定时任务 -->
+    <task:annotation-driven scheduler="scheduler" />
+    <!-- 配置线程池 -->
+    <task:scheduler id="scheduler" pool-size="10" />
+
+    <!--扫描定时任务类 -->
+    <context:component-scan base-package="com.snsprj.quartz" />
+
+    <!--配置redis -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="${redis.maxIdle}"/>
-        <property name="maxWaitMillis" value="${redis.maxWait}"/>
-        <property name="testOnBorrow" value="true"/>
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWait}" />
+        <property name="testOnBorrow" value="true" />
     </bean>
-    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <property name="hostName" value="${redis.host}"/>
-        <property name="port" value="${redis.port}"/>
-        <property name="password" value="${redis.password}"/>
-        <property name="poolConfig" ref="poolConfig"/>
+    <bean id="connectionFactory"
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}" />
+        <property name="port" value="${redis.port}" />
+        <property name="password" value="${redis.password}" />
+        <property name="poolConfig" ref="poolConfig" />
     </bean>
-    <!--redis操作模板-->
+    <!--redis操作模板 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="connectionFactory" ref="connectionFactory" />
         <property name="keySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+            <bean
+                class="org.springframework.data.redis.serializer.StringRedisSerializer" />
         </property>
         <property name="valueSerializer">
-            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
-        </property>
-    </bean>
-
-        <!-- 配置freemarker-->
-    <bean id="freemarkerConfig"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/views/" />
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="template_update_delay">0</prop>
-                <prop key="default_encoding">UTF-8</prop>
-                <prop key="number_format">0.##########</prop>
-                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-                <prop key="classic_compatible">true</prop>
-                <prop key="template_exception_handler">ignore</prop>
-            </props>
+            <bean
+                class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
         </property>
     </bean>
 

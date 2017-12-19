@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xis="http://www.w3.org/2001/XMLSchema-instance"
-       xis:schemaLocation="http://www.springframework.org/schema/beans
+    xmlns:xis="http://www.w3.org/2001/XMLSchema-instance"
+    xis:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/auth/login"/>
-        <property name="successUrl" value="/user/index"/>
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/auth/login" />
+        <property name="successUrl" value="/user/index" />
         <property name="filterChainDefinitions">
             <value>
-                <!--url=拦截器[参数]-->
-                <!--网站根目录-->
+                <!--url=拦截器[参数] -->
+                <!--网站根目录 -->
                 /= anon
                 <!-- 登录注册post请求 -->
                 /auth/** = anon
@@ -21,33 +21,27 @@
                 /captcha/** = anon
                 <!-- 测试 -->
                 /test/** = anon
-                <!--error page-->
+                <!--error page -->
                 /error/** = anon
 
                 /** = authc
             </value>
         </property>
-
-
-
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="myRealm"/>
+        <property name="realm" ref="myRealm" />
     </bean>
 
     <bean id="myRealm" class="com.snsprj.shiro.MyRealm">
         <property name="credentialsMatcher">
-            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                <property name="hashAlgorithmName" value="MD5"/>
-                <!--加密次数-->
-                <property name="hashIterations" value="64"/>
+            <bean
+                class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5" />
+                <!--加密次数 -->
+                <property name="hashIterations" value="64" />
             </bean>
         </property>
     </bean>
-
-
-
-
 
 </beans>
