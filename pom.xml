@@ -202,13 +202,6 @@
             <version>2.5.1</version>
         </dependency>
 
-        <!-- ok http -->
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-
         <!-- pdf -->
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -240,6 +233,12 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
         </dependency>
 
 
