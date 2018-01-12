@@ -12,7 +12,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * @author xiaohb
  *
  */
-public class Chinese2Pinyin {
+public class Chinese2PinyinUtil {
 
     private HanyuPinyinOutputFormat hanyuPinyinOutputFormat = null;
 
@@ -22,7 +22,7 @@ public class Chinese2Pinyin {
         FIRSTUPPER // 首字母大写
     }
 
-    public Chinese2Pinyin() {
+    public Chinese2PinyinUtil() {
         hanyuPinyinOutputFormat = new HanyuPinyinOutputFormat();
         hanyuPinyinOutputFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
         hanyuPinyinOutputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
@@ -76,7 +76,7 @@ public class Chinese2Pinyin {
     }
 
     public static void main(String[] agrs) {
-        Chinese2Pinyin chinese2Pinyin = new Chinese2Pinyin();
+        Chinese2PinyinUtil chinese2Pinyin = new Chinese2PinyinUtil();
         String str = "中问ghhf对对对123从v";
         try {
             String ret = chinese2Pinyin.toPinYin(str);
