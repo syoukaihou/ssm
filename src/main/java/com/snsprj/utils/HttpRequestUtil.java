@@ -18,30 +18,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import ch.qos.logback.core.util.StatusListenerConfigHelper;
-
 public class HttpRequestUtil {
 
-    public static void doGet(String url) throws IOException {
-
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(url);
-        try {
-            CloseableHttpResponse response = httpClient.execute(httpGet);
-            try {
-                response.getStatusLine();
-                System.out.println(response.getStatusLine());
-                HttpEntity httpEntity = response.getEntity();
-                EntityUtils.consume(httpEntity);
-            } finally {
-                response.close();
-            }
-        } finally {
-            httpClient.close();
-        }
-    }
-
-    public static void doGet2(String url) throws ClientProtocolException, IOException {
+    public static void doGet(String url) throws ClientProtocolException, IOException {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -104,7 +83,7 @@ public class HttpRequestUtil {
 
         String url = "http://www.baidu.com/";
         try {
-            doGet2(url);
+            doGet(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
