@@ -1,5 +1,7 @@
 package com.snsprj.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -14,6 +16,8 @@ import java.io.IOException;
 @Component
 public class MyFilter implements Filter {
 
+    private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -26,6 +30,7 @@ public class MyFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
+        logger.info("=====> test filter");
         filterChain.doFilter(request, response);
     }
 
