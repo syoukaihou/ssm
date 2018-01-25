@@ -2,6 +2,7 @@ package com.snsprj.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.snsprj.common.ServerResponse;
+import com.snsprj.dto.Product;
 import com.snsprj.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,14 @@ public class ProductController {
 
     @RequestMapping("list")
     @ResponseBody
-    public ServerResponse<PageInfo> getProductList(@Min(value = 0, message = ("category_id错误！")) Integer category_id,
+    public ServerResponse<PageInfo<Product>> getProductList(@Min(value = 0, message = ("category_id错误！")) Integer category_id,
                                                    @NotNull Integer page_num) {
 
         // TODO 若 categoryId=0 则显示所有商品
 
         Byte status = 1;
 
-        PageInfo page = iProductService.getProductByCategoryId(category_id, status, page_num, 10);
+        PageInfo<Product> page = iProductService.getProductByCategoryId(category_id, status, page_num, 10);
 
 
         return ServerResponse.createBySuccess(page);

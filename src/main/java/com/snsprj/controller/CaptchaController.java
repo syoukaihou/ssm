@@ -46,6 +46,8 @@ public class CaptchaController {
 
         String capText = captchaProducer.createText();
 
+        logger.info("------> capText is " + capText);
+
         httpSession.setAttribute(ConstCode.SESSION_KEY_IMAGE_CAPTCHA, capText);
 
         BufferedImage bi = captchaProducer.createImage(capText);

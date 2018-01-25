@@ -27,7 +27,7 @@ public class ProductServiceImpl implements IProductService{
      * @param pageSize pageSize
      * @return PageInfo
      */
-    public PageInfo getProductByCategoryId(Integer categoryId,Byte status,
+    public PageInfo<Product> getProductByCategoryId(Integer categoryId,Byte status,
                                                 int pageNum,int pageSize ){
 
         // 紧跟着的第一个select方法会被分页
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements IProductService{
 
         List<Product> productList = productMapper.selectByCategoryId(categoryId,status);
 
-        PageInfo page = new PageInfo(productList);
+        PageInfo<Product> page = new PageInfo<>(productList);
         return page;
     }
 }
