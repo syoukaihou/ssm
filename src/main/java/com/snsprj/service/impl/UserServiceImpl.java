@@ -21,7 +21,7 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     private UserMapper userMapper;
 
-    
+    @Override
     public User getUserDetailByPrimaryKey(Integer userId){
 
         return userMapper.selectDetailByPrimaryKey(userId);
@@ -34,6 +34,7 @@ public class UserServiceImpl implements IUserService{
      * @param password password
      * @return userId
      */
+    @Override
     public User register(@NotBlank(message = "用户名不能为空") String username,
                             @NotBlank(message = "密码不能为空") String password) throws AlreadyExistsException{
 

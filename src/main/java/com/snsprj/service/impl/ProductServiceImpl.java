@@ -27,6 +27,7 @@ public class ProductServiceImpl implements IProductService{
      * @param pageSize pageSize
      * @return PageInfo
      */
+    @Override
     public PageInfo<Product> getProductByCategoryId(Integer categoryId,Byte status,
                                                 int pageNum,int pageSize ){
 
