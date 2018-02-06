@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * 测试动态参数
  * @author SKH
- * @Date 2017年11月30日
+ * 2017年11月30日
  *
  */
 public class TestArgs {
