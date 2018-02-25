@@ -1,11 +1,6 @@
 package com.snsprj.utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -17,57 +12,124 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author skh
+ *
+ * 基于apache.http.client的http请求工具
+ */
 public class HttpRequestUtil {
 
-    public static void doGet(String url) throws ClientProtocolException, IOException {
+    private static final Logger logger = LoggerFactory.getLogger(HttpRequestUtil.class);
+
+    private static final String UTF8 = "utf-8";
+
+
+    /**
+     * @author skh
+     *
+     * http get请求
+     *
+     * @param url 访问地址
+     * @param dataMap 参数
+     * @return String 返回值
+     * @throws IOException 异常
+     */
+    public static String doGet(String url, Map<String, String> dataMap) throws IOException {
+
+        String result;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpGet httpGet = new HttpGet(url);
 
-            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+            // 装填请求参数
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-                // Create a custom response handler
-                @Override
-                public String handleResponse(final HttpResponse response)
-                        throws ClientProtocolException, IOException {
+            for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+                nvps.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+            }
 
-                    int status = response.getStatusLine().getStatusCode();
+            //转换为键值对
+            String str = EntityUtils.toString(new UrlEncodedFormEntity(nvps, UTF8));
 
-                    if (status >= 200 && status < 300) {
-                        HttpEntity entity = response.getEntity();
-                        return entity != null ? EntityUtils.toString(entity) : null;
-                    } else {
-                        throw new ClientProtocolException("Unexpected response status: " + status);
-                    }
+            HttpGet httpGet = new HttpGet(url + "?" + str);
+
+            // Create a custom response handler
+            ResponseHandler<String> responseHandler = response -> {
+
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    throw new ClientProtocolException("Unexpected response status: " + status);
                 }
-
             };
-            String responseBody = httpClient.execute(httpGet, responseHandler);
-            System.out.println(responseBody);
+            result = httpClient.execute(httpGet, responseHandler);
+
         } finally {
             httpClient.close();
         }
+        return result;
     }
 
-    public static void doPost(String url) throws ClientProtocolException, IOException {
+    /**
+     * @author skh
+     *
+     * http post 请求
+     *
+     * @param url 请求地址
+     * @throws IOException IO异常
+     */
+    public static String doPost(String url, Map<String, String> dataMap) throws IOException {
 
+        // 返回值
+        String result;
+
+        // 创建默认的httpclient
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
+
+            // 创建post请求对象
             HttpPost httpPost = new HttpPost(url);
 
+            // 装填请求参数
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("username", "vip"));
-            nvps.add(new BasicNameValuePair("password", "secret"));
-            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+
+            for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+                nvps.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+            }
+
+            //设置参数到请求对象中
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, UTF8));
+
+            // 设置header信息
+            //指定报文头【Content-type】、【User-Agent】
+            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            httpPost.setHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+
+            // 执行请求操作，并拿到结果（同步阻塞）
             CloseableHttpResponse response = httpClient.execute(httpPost);
 
             try {
                 response.getStatusLine();
+
+                // 获取结果实体
                 HttpEntity entity = response.getEntity();
+
+                result = EntityUtils.toString(entity, UTF8);
+
+                // 关流
                 EntityUtils.consume(entity);
             } finally {
                 response.close();
@@ -75,19 +137,7 @@ public class HttpRequestUtil {
         } finally {
             httpClient.close();
         }
-    }
 
-
-
-    public static void main(String[] args) {
-
-        String url = "http://www.baidu.com/";
-        try {
-            doGet(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        return result;
     }
 }

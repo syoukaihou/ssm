@@ -6,12 +6,11 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -113,4 +112,19 @@ public class DemoController {
         return ServerResponse.createBySuccess();
     }
 
+
+    @RequestMapping(value = "/httpclient", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<JSONObject> testHttpClientPost(@RequestParam(name = "username") String username,
+                                                     @RequestParam(name = "password") String password){
+
+        logger.info("username is " + username);
+        logger.info("password is " + password);
+
+        JSONObject responseData = new JSONObject();
+        responseData.put("username", "用户名：" + username);
+        responseData.put("password", "密码：" + password);
+
+        return ServerResponse.createBySuccess(responseData);
+    }
 }
