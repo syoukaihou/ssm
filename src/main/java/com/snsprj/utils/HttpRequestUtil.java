@@ -8,14 +8,21 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +37,10 @@ public class HttpRequestUtil {
     private static final Logger logger = LoggerFactory.getLogger(HttpRequestUtil.class);
 
     private static final String UTF8 = "utf-8";
+
+    private static final String USER_AGENT = "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)";
+
+    private static final String CONTENT_TYPE = "application/x-www-form-urlencoded; charset=UTF-8";
 
 
     /**
@@ -51,7 +62,7 @@ public class HttpRequestUtil {
         try {
 
             // 装填请求参数
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            List<NameValuePair> nvps = new ArrayList<>();
 
             for (Map.Entry<String, String> entry : dataMap.entrySet()) {
                 nvps.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
@@ -104,7 +115,7 @@ public class HttpRequestUtil {
             HttpPost httpPost = new HttpPost(url);
 
             // 装填请求参数
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            List<NameValuePair> nvps = new ArrayList<>();
 
             for (Map.Entry<String, String> entry : dataMap.entrySet()) {
                 nvps.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
@@ -115,8 +126,8 @@ public class HttpRequestUtil {
 
             // 设置header信息
             //指定报文头【Content-type】、【User-Agent】
-            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-            httpPost.setHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+            httpPost.setHeader("Content-type", CONTENT_TYPE);
+            httpPost.setHeader("User-Agent", USER_AGENT);
 
             // 执行请求操作，并拿到结果（同步阻塞）
             CloseableHttpResponse response = httpClient.execute(httpPost);
@@ -139,5 +150,31 @@ public class HttpRequestUtil {
         }
 
         return result;
+    }
+
+    /**
+     * @author SKH
+     *
+     * https信任所有
+     *
+     * @return CloseableHttpClient
+     */
+    public static CloseableHttpClient getHttpClient(){
+
+        SSLConnectionSocketFactory sslsf = null;
+
+        try {
+
+            //信任所有
+            SSLContext sslContext = new SSLContextBuilder()
+                    .loadTrustMaterial(null, (TrustStrategy) (chain, authType) -> true).build();
+
+            sslsf = new SSLConnectionSocketFactory(sslContext);
+
+        } catch (KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return HttpClients.custom().setSSLSocketFactory(sslsf).build();
     }
 }
