@@ -37,8 +37,11 @@ public class DemoController {
 
         String jsonStr = request.getParameter("jsonData");
 
-        System.out.println(jsonStr);
+        System.out.println("jsonStr is " + jsonStr);
 
+        for(int i = 0; i < 10000; i++){
+            logger.debug("------> test debug log");
+        }
         logger.info("------> test info log");
         logger.error("------> test error log");
         logger.debug("------> test debug log");

@@ -3,7 +3,10 @@
 
     <!-- 定义变量 -->
     <!-- 日志文件大小 -->
-    <property name="log.max.size" value="20MB"/>
+    <property name="log.maxSize" value="10MB"/>
+
+    <!-- 日志占用最大空间 -->
+    <property name="log.totalSizeCap" value="10GB"/>
 
     <!-- 定义日志文件 输入位置 -->
     <!-- 如果使用的是相对路径的话，当部署到tomcat路径下的时候，默认是输出到tomcat的bin目录下。
@@ -11,7 +14,7 @@
     <property name="log.dir" value="../logs/ssm"/>
 
     <!-- 日志最大的历史 30天 -->
-    <property name="maxHistory" value="30"/>
+    <property name="log.maxHistory" value="30"/>
 
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -50,19 +53,12 @@
             <!-- 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。
             假设设置每天滚动，且 <maxHistory>是30，则只保存最近30天的文件，
             删除之前的旧文件。 注意，删除旧文件是，那些为了归档而创建的目录也会被删除。 -->
-            <maxHistory>${maxHistory}</maxHistory>
+            <maxHistory>${log.maxHistory}</maxHistory>
 
         </rollingPolicy>
 
-        <!-- 告知 RollingFileAppender 何时激活滚动。 -->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-
-            <!-- 指定活动文件的大小，默认值是10MB -->
-            <maxFileSize>${log.max.size}</maxFileSize>
-        </triggeringPolicy>
-
         <encoder>
-            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d %-4relative [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
 
     </appender>
@@ -78,11 +74,11 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.dir}/info-log.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
+            <maxHistory>${log.maxHistory}</maxHistory>
         </rollingPolicy>
 
         <encoder>
-            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d %-4relative [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
 
     </appender>
@@ -96,13 +92,18 @@
             <onMismatch>DENY</onMismatch>
         </filter>
 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir}/debug-log.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
+        <!-- 从日期与文件大小两个纬度控制日志文件分割 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志按日期分割时必须要有"%d"，表示日期 -->
+            <!-- 日志按大小分割时必须要有"%i"，表示个数 -->
+            <fileNamePattern>${log.dir}/debug-log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>${log.maxSize}</maxFileSize>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
-            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d %-4relative [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -122,8 +123,9 @@
         4、root接收到下级传递的信息，交给已配置好的名为“stdout”的appender处理。 -->
     <!--<logger name="com.snsprj" additivity="true" level="debug"/>-->
 
-    <logger name="com.snsprj" additivity="false" level="info">
+    <logger name="com.snsprj" additivity="false" level="DEBUG">
         <appender-ref ref="INFO"/>
+        <appender-ref ref="DEBUG"/>
     </logger>
 
 </configuration>
