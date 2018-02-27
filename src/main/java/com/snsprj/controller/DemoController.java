@@ -39,8 +39,9 @@ public class DemoController {
 
         System.out.println(jsonStr);
 
-        logger.info("test info log");
-        logger.error("test error log");
+        logger.info("------> test info log");
+        logger.error("------> test error log");
+        logger.debug("------> test debug log");
 
         return "OK";
     }
