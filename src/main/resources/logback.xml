@@ -6,7 +6,9 @@
     <property name="log.max.size" value="20MB"/>
 
     <!-- 定义日志文件 输入位置 -->
-    <property name="log.dir" value="logs"/>
+    <!-- 如果使用的是相对路径的话，当部署到tomcat路径下的时候，默认是输出到tomcat的bin目录下。
+     "../logs" 的意思是把日志输出到tomcat的logs目录下 -->
+    <property name="log.dir" value="../logs/ssm"/>
 
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="30"/>
@@ -67,40 +69,38 @@
 
     <!-- INFO -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <append>true</append>
+
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir}/info-log.%d{yyyy-MM-dd}.log
-            </fileNamePattern>
+            <fileNamePattern>${log.dir}/info-log.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>${log.max.size}</maxFileSize>
-        </triggeringPolicy>
+
         <encoder>
             <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
+
     </appender>
 
     <!-- DEBUG -->
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <append>true</append>
+
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.dir}/debug-log.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>${log.max.size}</maxFileSize>
-        </triggeringPolicy>
+
         <encoder>
             <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
@@ -108,7 +108,7 @@
 
     <!-- 根logger -->
     <!-- 日志级别：ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
-    <root level="ERROR">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
         <!--<appender-ref ref="ERROR"/>-->
         <!--<appender-ref ref="INFO"/>-->
@@ -123,8 +123,7 @@
     <!--<logger name="com.snsprj" additivity="true" level="debug"/>-->
 
     <logger name="com.snsprj" additivity="false" level="info">
-        <appender-ref ref="STDOUT"/>
-        <!--<appender-ref ref="INFO"/>-->
+        <appender-ref ref="INFO"/>
     </logger>
 
 </configuration>
