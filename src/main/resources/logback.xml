@@ -111,21 +111,25 @@
     <!-- 日志级别：ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
     <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
-        <!--<appender-ref ref="ERROR"/>-->
-        <!--<appender-ref ref="INFO"/>-->
-        <!--<appender-ref ref="DEBUG"/>-->
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
     </root>
 
     <!-- name：用来指定受此logger约束的某一个包或者具体的某一个类。
         1、没有配置level，将继承它的上一级<root>的日志级别“debug”。
         2、additivity默认为true，将此logger的打印信息向上级传递。
         3、没有设置appender，此logger本身不打印任何日志信息。
-        4、root接收到下级传递的信息，交给已配置好的名为“stdout”的appender处理。 -->
-    <!--<logger name="com.snsprj" additivity="true" level="debug"/>-->
+        4、root接收到下级传递的信息，交给已配置好的名为“stdout”的appender处理。
+    -->
+    <!--<logger name="com.snsprj.service"/>-->
 
-    <logger name="com.snsprj" additivity="false" level="DEBUG">
-        <appender-ref ref="INFO"/>
-        <appender-ref ref="DEBUG"/>
-    </logger>
+    <!-- 处理com.snsprj.controller包下所有日志，
+    只输出level >= DEBUG级别的日志，
+    因为没有DEBUG的appender，所以不会输出debug信息 -->
+    <!--<logger name="com.snsprj.controller" additivity="false" level="DEBUG">-->
+        <!--<appender-ref ref="INFO"/>-->
+        <!--<appender-ref ref="ERROR"/>-->
+    <!--</logger>-->
 
 </configuration>
