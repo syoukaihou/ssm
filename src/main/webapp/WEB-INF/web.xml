@@ -31,7 +31,7 @@
 
     <!-- 配置logback配置文件位置 -->
     <context-param>
-        <param-name>logbackConfigLoaction</param-name>
+        <param-name>logbackConfigLocation</param-name>
         <param-value>classpath:logback.xml</param-value>
     </context-param>
     <listener>
@@ -77,16 +77,6 @@
     <session-config>
         <session-timeout>10</session-timeout>
     </session-config>
-
-    <!-- 配置spring管理session -->
-<!--     <filter>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping> -->
 
     <!-- 中文编码过滤器 -->
     <filter>
