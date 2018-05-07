@@ -33,11 +33,11 @@ public class EchoServer {
 
         final EchoServerHandler serverHandler = new EchoServerHandler();
 
-        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
 
         try {
-            ServerBootstrap b = new ServerBootstrap();
-            b.group(group).channel(NioServerSocketChannel.class)
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(eventLoopGroup).channel(NioServerSocketChannel.class)
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
@@ -46,12 +46,12 @@ public class EchoServer {
                         }
                     });
 
-            ChannelFuture future = b.bind().sync();
+            ChannelFuture future = serverBootstrap.bind().sync();
 
             future.channel().closeFuture().sync();
         }finally {
 
-            group.shutdownGracefully().sync();
+            eventLoopGroup.shutdownGracefully().sync();
         }
     }
 }
