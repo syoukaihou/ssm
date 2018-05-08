@@ -10,27 +10,33 @@
     <!-- 引入外部属性文件 -->
     <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
 
-
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <!-- jedis -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxWaitMillis" value="${redis.maxWait}"/>
-        <property name="testOnBorrow" value="true"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
     </bean>
 
-    <bean id="connectionFactory"
+    <!-- 设置Cookie domain 和 名称 -->
+    <bean id="defaultCookieSerializer"
+      class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="domainName" value="snsprj.cn"/>
+        <property name="cookieName" value="JSESSIONID"/>
+        <property name="cookiePath" value="/"/>
+    </bean>
+
+    <bean id="jedisConnectionFactory"
       class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="${redis.host}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
-        <property name="poolConfig" ref="poolConfig"/>
-    </bean>
-    <bean class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
-        <property name="hostName" value=""/>
+        <property name="timeout" value="${redis.timeout}"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
     </bean>
 
     <!--redis操作模板 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
         <property name="keySerializer">
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
@@ -39,4 +45,15 @@
               class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
         </property>
     </bean>
+
+    <bean id="redisUtil" class="com.snsprj.common.RedisUtil">
+        <property name="redisTemplate" ref="redisTemplate"/>
+    </bean>
+
+    <!-- 添加RedisHttpSessionConfiguration用于session共享 -->
+    <bean
+      class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+
+
+
 </beans>
