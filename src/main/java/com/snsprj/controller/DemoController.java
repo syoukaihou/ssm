@@ -210,6 +210,12 @@ public class DemoController {
         this.addCookie(response, session.getId());
 
         return "login success!";
+    }
 
+
+    @RequestMapping(value = "/html",method = {RequestMethod.GET})
+    public String testHtml(){
+
+        return "index";
     }
 }

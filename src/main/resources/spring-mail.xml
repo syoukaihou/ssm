@@ -31,7 +31,7 @@
     <bean id="freeMarkerConfigurer"
       class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <!-- 模板路径位置 -->
-        <property name="templateLoaderPath" value="classpath:mail/template"/>
+        <property name="templateLoaderPath" value="classpath:mail/template/"/>
         <property name="freemarkerSettings">
             <props>
                 <!-- 模板更新延时 -->

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xis="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xis:schemaLocation="http://www.springframework.org/schema/beans
+  xmlns:xis="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xis:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd  
                         http://www.springframework.org/schema/mvc  
                         http://www.springframework.org/schema/mvc/spring-mvc.xsd  
@@ -10,15 +11,15 @@
                         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 使用组件扫描的方式可以一次扫描多个Controller -->
-    <context:component-scan base-package="com.snsprj.controller" />
+    <context:component-scan base-package="com.snsprj.controller"/>
 
     <!-- 让DispatchServlet启动基于annotation的HandlerMapping -->
     <mvc:annotation-driven>
         <mvc:message-converters
-            register-defaults="true">
+          register-defaults="true">
             <!-- 解决Controller返回json中文乱码问题 -->
             <bean
-                class="org.springframework.http.converter.StringHttpMessageConverter">
+              class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
@@ -30,11 +31,19 @@
     </mvc:annotation-driven>
 
     <!-- 静态资源 -->
-    <mvc:default-servlet-handler />
+    <mvc:default-servlet-handler/>
 
     <!-- 多文件上传 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean id="multipartResolver"
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- html视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/resources/html/"/>
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
 </beans>
