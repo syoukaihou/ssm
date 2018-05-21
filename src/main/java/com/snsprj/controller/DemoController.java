@@ -218,4 +218,13 @@ public class DemoController {
 
         return "index";
     }
+
+    @RequestMapping(value = "/cros")
+    @ResponseBody
+    public ServerResponse<String> testCros(){
+
+        logger.info("====> cros run!");
+
+        return ServerResponse.createBySuccess();
+    }
 }

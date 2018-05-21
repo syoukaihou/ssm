@@ -35,16 +35,5 @@
 
     <bean id="testFilter" class="com.snsprj.filter.MyFilter" />
 
-    <!-- 配置代码读取properties文件 -->
-    <bean id="propertyConfigurer" class="com.snsprj.common.PropertyPlaceholder">
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="locations">
-            <list>
-                <value>classpath:mail.properties</value>
-                <value>classpath:redis.properties</value>
-            </list>
-        </property>
-    </bean>
-
 
 </beans>

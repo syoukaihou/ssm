@@ -18,6 +18,7 @@ ssm.iml
 .idea/
 
 # 
+src/main/resources/*.properties
 src/main/resources/jdbc.properties
 src/main/resources/redis.properties
 src/main/resources/mail.properties
