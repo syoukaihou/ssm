@@ -87,5 +87,6 @@
     <import resource="spring-shiro.xml"/>
     <import resource="spring-mail.xml"/>
     <import resource="spring-kafka-producer.xml"/>
+    <import resource="spring-kafka-consumer.xml"/>
 
 </beans>
