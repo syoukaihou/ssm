@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.snsprj.dao.CategoryMapper">
+<mapper namespace="com.snsprj.dao.generated.CategoryMapper">
   <resultMap id="BaseResultMap" type="com.snsprj.dto.Category">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
@@ -12,11 +12,11 @@
   <sql id="Base_Column_List">
     id, category_name, parent_id, status, created_at, updated_at
   </sql>
-  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from categories
-    where id = #{id,jdbcType=INTEGER} and status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from categories
@@ -29,7 +29,7 @@
     insert into categories (category_name, parent_id, status, 
       created_at, updated_at)
     values (#{categoryName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      now(), now())
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.snsprj.dto.Category">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -46,9 +46,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="createdAt != null">
         created_at,
+      </if>
+      <if test="updatedAt != null">
         updated_at,
-
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="categoryName != null">
@@ -61,10 +64,10 @@
         #{status,jdbcType=TINYINT},
       </if>
       <if test="createdAt != null">
-        now(),
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedAt != null">
-        now(),
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -80,9 +83,11 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
       <if test="updatedAt != null">
-        updated_at = now(),
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -92,16 +97,8 @@
     set category_name = #{categoryName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
-      updated_at = now()
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="selectByParentId" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM
-    categories
-    WHERE
-    parent_id = #{parentId,jdbcType=INTEGER} and status = #{status,jdbcType=TINYINT}
-  </select>
 </mapper>

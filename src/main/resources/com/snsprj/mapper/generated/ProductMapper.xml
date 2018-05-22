@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.snsprj.dao.ProductMapper">
+<mapper namespace="com.snsprj.dao.generated.ProductMapper">
   <resultMap id="BaseResultMap" type="com.snsprj.dto.Product">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
@@ -14,22 +14,13 @@
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.snsprj.dto.Product">
-    <result column="sub_images" jdbcType="LONGVARCHAR" property="subImages" />
-    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
-  </resultMap>
   <sql id="Base_Column_List">
     id, category_id, product_name, subtitle, main_image, price, stock, status, is_top, 
     created_at, updated_at
   </sql>
-  <sql id="Blob_Column_List">
-    sub_images, detail
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from products
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -44,13 +35,11 @@
     insert into products (category_id, product_name, subtitle, 
       main_image, price, stock, 
       status, is_top, created_at, 
-      updated_at, sub_images, detail
-      )
+      updated_at)
     values (#{categoryId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
       #{mainImage,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{isTop,jdbcType=TINYINT}, now(), 
-      now(), #{subImages,jdbcType=LONGVARCHAR}, #{detail,jdbcType=LONGVARCHAR}
-      )
+      #{status,jdbcType=TINYINT}, #{isTop,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.snsprj.dto.Product">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -88,12 +77,6 @@
       <if test="updatedAt != null">
         updated_at,
       </if>
-      <if test="subImages != null">
-        sub_images,
-      </if>
-      <if test="detail != null">
-        detail,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="categoryId != null">
@@ -121,16 +104,10 @@
         #{isTop,jdbcType=TINYINT},
       </if>
       <if test="createdAt != null">
-        now(),
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedAt != null">
-        now(),
-      </if>
-      <if test="subImages != null">
-        #{subImages,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="detail != null">
-        #{detail,jdbcType=LONGVARCHAR},
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -161,31 +138,13 @@
       <if test="isTop != null">
         is_top = #{isTop,jdbcType=TINYINT},
       </if>
-
-        updated_at = now(),
-
-      <if test="subImages != null">
-        sub_images = #{subImages,jdbcType=LONGVARCHAR},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="detail != null">
-        detail = #{detail,jdbcType=LONGVARCHAR},
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.snsprj.dto.Product">
-    update products
-    set category_id = #{categoryId,jdbcType=INTEGER},
-      product_name = #{productName,jdbcType=VARCHAR},
-      subtitle = #{subtitle,jdbcType=VARCHAR},
-      main_image = #{mainImage,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      stock = #{stock,jdbcType=INTEGER},
-      status = #{status,jdbcType=TINYINT},
-      is_top = #{isTop,jdbcType=TINYINT},
-      updated_at = now(),
-      sub_images = #{subImages,jdbcType=LONGVARCHAR},
-      detail = #{detail,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.snsprj.dto.Product">
@@ -198,43 +157,8 @@
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       is_top = #{isTop,jdbcType=TINYINT},
-      updated_at = now()
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <!-- 根据categoryId查询商品 -->
-  <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from products
-    where category_id = #{categoryId} and status = #{status}
-    ORDER BY is_top desc , updated_at desc
-  </select>
-  
-  <select id="selectByUpdatedAt" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from products
-    <where>
-        <if test="vane gt 0">
-            updated_at &gt; #{date} AND status = #{status}
-            ORDER BY is_top desc , updated_at desc
-        </if>
-        <if test="vane == 0">
-            updated_at = #{date} AND status != #{status}
-            ORDER BY is_top desc , updated_at desc
-        </if>
-        <if test="vane lt 0">
-            updated_at &lt; #{date} AND status = #{status}
-            ORDER BY is_top desc , updated_at desc
-        </if>
-
-    </where>
-  </select>
-
-
 </mapper>

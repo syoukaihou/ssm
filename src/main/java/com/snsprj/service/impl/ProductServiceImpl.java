@@ -2,7 +2,7 @@ package com.snsprj.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.snsprj.dao.ProductMapper;
+import com.snsprj.dao.manual.ProductManualMapper;
 import com.snsprj.dto.Product;
 import com.snsprj.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductServiceImpl implements IProductService{
 
     @Autowired
-    private ProductMapper productMapper;
+    private ProductManualMapper productMapper;
 
     /**
      * 获取某分类下所有商品（分页）

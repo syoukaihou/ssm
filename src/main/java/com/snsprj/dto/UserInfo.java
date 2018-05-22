@@ -3,7 +3,6 @@ package com.snsprj.dto;
 import java.util.Date;
 
 public class UserInfo {
-
     private Integer id;
 
     private Integer userId;

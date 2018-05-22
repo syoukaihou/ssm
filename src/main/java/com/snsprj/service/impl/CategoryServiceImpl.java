@@ -2,7 +2,8 @@ package com.snsprj.service.impl;
 
 import com.snsprj.common.ConstCode;
 import com.snsprj.common.ErrorCode;
-import com.snsprj.dao.CategoryMapper;
+import com.snsprj.dao.generated.CategoryMapper;
+import com.snsprj.dao.manual.CategoryManualMapper;
 import com.snsprj.dto.Category;
 import com.snsprj.service.ICategoryService;
 import com.snsprj.vo.CategoryVo;
@@ -20,6 +21,9 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private CategoryManualMapper categoryManualMapper;
+
 
     @Override
     public int insertCategory(CategoryVo categoryVo) {
@@ -29,16 +33,16 @@ public class CategoryServiceImpl implements ICategoryService {
 
         // TODO check category name is exist
 
-        if(parentId != 0){
+        if (parentId != 0) {
             // check parentId is available
-            Category parentCategory = categoryMapper.selectByPrimaryKey(parentId, ConstCode.CATEGORY_STATUS_ACTIVE);
-            if(parentCategory == null){
+            Category parentCategory = categoryMapper.selectByPrimaryKey(parentId);
+            if (parentCategory == null) {
                 return ErrorCode.ILLEGAL_PARENTID;
             }
 
             // limit depth
             int depth = this.getCategoryDepth(parentId);
-            if(ConstCode.CATEGORY_DEPTH <= depth){
+            if (ConstCode.CATEGORY_DEPTH <= depth) {
                 return ErrorCode.ILLEGAL_PARENTID;
             }
         }
@@ -55,9 +59,9 @@ public class CategoryServiceImpl implements ICategoryService {
 
     public void getCategoryList() {
 
-
         // first: get all parentId=0 records
-        List<Category> categoryList = categoryMapper.selectByParentId(0, ConstCode.CATEGORY_STATUS_ACTIVE);
+        List<Category> categoryList = categoryManualMapper
+            .selectByParentId(0, ConstCode.CATEGORY_STATUS_ACTIVE);
 
         // second: traverse list
         for (int index = 0; index < categoryList.size(); index++) {
@@ -68,33 +72,24 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
 
-
     /**
-     * get depth of category,
-     * depth=1 when record's parentId=0.
+     * get depth of category, depth=1 when record's parentId=0.
+     *
      * @param categoryId category id
      * @return int
      */
-    private int getCategoryDepth(int categoryId){
+    private int getCategoryDepth(int categoryId) {
 
-        Category category = categoryMapper.selectByPrimaryKey(categoryId,ConstCode.CATEGORY_STATUS_ACTIVE);
+        Category category = categoryMapper.selectByPrimaryKey(categoryId);
 
         int parentId = category.getParentId();
 
-        if(parentId == 0){
+        if (parentId == 0) {
             return 1;
-        }else{
+        } else {
             return 1 + getCategoryDepth(parentId);
         }
     }
-
-
-
-
-
-
-
-
 
 
 }

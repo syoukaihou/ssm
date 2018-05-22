@@ -1,7 +1,9 @@
 package com.snsprj.service.impl;
 
-import com.snsprj.common.exception.AlreadyExistsException;
-import com.snsprj.dao.UserMapper;
+import com.snsprj.common.ErrorCode;
+import com.snsprj.common.ServerResponse;
+import com.snsprj.dao.generated.UserMapper;
+import com.snsprj.dao.manual.UserManualMapper;
 import com.snsprj.dto.User;
 import com.snsprj.service.IUserService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -21,11 +23,8 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     private UserMapper userMapper;
 
-    @Override
-    public User getUserDetailByPrimaryKey(Integer userId){
-
-        return userMapper.selectDetailByPrimaryKey(userId);
-    }
+    @Autowired
+    private UserManualMapper userManualMapper;
 
 
     /**
@@ -35,14 +34,15 @@ public class UserServiceImpl implements IUserService{
      * @return userId
      */
     @Override
-    public User register(@NotBlank(message = "用户名不能为空") String username,
-                            @NotBlank(message = "密码不能为空") String password) throws AlreadyExistsException{
+    public ServerResponse<User> register(@NotBlank(message = "用户名不能为空") String username,
+                            @NotBlank(message = "密码不能为空") String password) {
+
 
         // check does username already exist
-        User user = userMapper.selectByUsername(username);
+        User user = userManualMapper.selectByUsername(username);
 
         if(user != null){
-            throw new AlreadyExistsException("username already exists!");
+            return ServerResponse.createByError(ErrorCode.ACCOUNT_ALREADY_EXISTS);
         }
 
         String algorithmName = "MD5";
@@ -63,7 +63,7 @@ public class UserServiceImpl implements IUserService{
 
         userMapper.insert(newUser);
 
-        return newUser;
+        return ServerResponse.createBySuccess(newUser);
     }
 
 }

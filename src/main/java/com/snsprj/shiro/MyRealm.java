@@ -1,6 +1,6 @@
 package com.snsprj.shiro;
 
-import com.snsprj.dao.UserMapper;
+import com.snsprj.dao.manual.UserManualMapper;
 import com.snsprj.dto.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,7 +17,7 @@ public class MyRealm extends AuthorizingRealm {
 
 
     @Autowired
-    UserMapper userMapper;
+    UserManualMapper userMapper;
 
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store.  When returning

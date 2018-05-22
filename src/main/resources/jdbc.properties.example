@@ -1,6 +1,0 @@
-jdbc.driverClass=com.mysql.jdbc.Driver
-
-# useUnicode=true&characterEncoding=utf8:指定字符的编码、解码格式
-jdbc.url=jdbc:mysql://192.168.1.206:3306/ssm?useUnicode=true&characterEncoding=utf8
-jdbc.username=foo
-jdbc.password=123456

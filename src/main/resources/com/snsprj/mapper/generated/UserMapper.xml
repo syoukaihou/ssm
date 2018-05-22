@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.snsprj.dao.UserMapper">
+<mapper namespace="com.snsprj.dao.generated.UserMapper">
   <resultMap id="BaseResultMap" type="com.snsprj.dto.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
@@ -29,7 +29,7 @@
     insert into users (account, password, salt, 
       created_at, updated_at)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
-      now(), now())
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.snsprj.dto.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -63,11 +63,12 @@
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
       </if>
-      /*created_at*/
-        now(),
-      /*updated_at*/
-        now(),
-
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.snsprj.dto.User">
@@ -82,8 +83,11 @@
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
       </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
       <if test="updatedAt != null">
-        updated_at = now(),
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -93,28 +97,8 @@
     set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
-      updated_at = now()
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-    <!-- 获取用户详细信息，一对一 -->
-    <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        users.id ,users.account ,
-        user_info.id AS user_info_id,user_info.user_id,user_info.nickname,user_info.avatar
-        from
-        users users left JOIN user_info user_info on users.id = user_info.user_id
-        WHERE
-        users.id = #{id}
-    </select>
-
-    <!--根据用户名获取用户信息-->
-    <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM
-        users
-        WHERE
-        account = #{account}
-    </select>
 </mapper>

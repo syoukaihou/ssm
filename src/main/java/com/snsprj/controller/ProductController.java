@@ -25,7 +25,7 @@ public class ProductController {
     @Autowired
     private IProductService iProductService;
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     @ResponseBody
     public ServerResponse<PageInfo<Product>> getProductList(@Min(value = 0, message = ("category_id错误！")) Integer category_id,
                                                    @NotNull Integer page_num) {

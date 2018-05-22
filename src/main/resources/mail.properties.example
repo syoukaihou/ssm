@@ -1,5 +1,0 @@
-mail.host=smtp.163.com
-mail.port=25
-mail.username=username@163.com
-mail.password=password
-mail.smtp.ssl.enable=true

@@ -1,22 +1,11 @@
-package com.snsprj.dao;
+package com.snsprj.dao.manual;
 
 import com.snsprj.dto.Category;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface CategoryMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Category record);
-
-    int insertSelective(Category record);
-
-    Category selectByPrimaryKey(@Param("id") Integer id,@Param("status") byte status);
-
-    int updateByPrimaryKeySelective(Category record);
-
-    int updateByPrimaryKey(Category record);
+public interface CategoryManualMapper {
 
     /**
      * get record list by parent id
