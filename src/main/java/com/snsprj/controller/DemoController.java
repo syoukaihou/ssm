@@ -24,11 +24,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  * Created by skh on 2017/7/3.
  */
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/test/")
 public class DemoController {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
-
 
     /**
      * 测试文件上传
@@ -99,9 +98,17 @@ public class DemoController {
      *
      * @return view
      */
-    @RequestMapping(value = "/html",method = {RequestMethod.GET})
+    @RequestMapping(value = "html",method = {RequestMethod.GET})
     public String testHtml(){
 
         return "index";
     }
+
+    @RequestMapping(value = "response")
+    @ResponseBody
+    public ServerResponse<String> testResponse(){
+
+        return  ServerResponse.createBySuccess();
+    }
+
 }

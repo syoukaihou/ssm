@@ -1,10 +1,14 @@
 package com.snsprj.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 
 /**
  * Created by John on 2017/6/11.
  */
+@JsonInclude(value = Include.NON_NULL)
 public class ServerResponse<T> implements Serializable {
 
     /**
@@ -38,6 +42,7 @@ public class ServerResponse<T> implements Serializable {
         this.msg = msg;
     }
 
+    @JsonIgnore
     public boolean isSuccess() {
         return this.code == ResponseCode.SUCCESS.getCode();
     }
