@@ -11,7 +11,7 @@
     <!-- 定义日志文件 输入位置 -->
     <!-- 如果使用的是相对路径的话，当部署到tomcat路径下的时候，默认是输出到tomcat的bin目录下。
      "../logs" 的意思是把日志输出到tomcat的logs目录下 -->
-    <property name="log.dir" value="../logs/ssm"/>
+    <property name="log.dir" value="../logs/ssm/"/>
 
     <!-- 日志最大的历史 30天 -->
     <property name="log.maxHistory" value="30"/>

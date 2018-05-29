@@ -17,15 +17,12 @@ target/
 ssm.iml
 .idea/
 
-# 
+# project
 src/main/resources/*.properties
-src/main/resources/jdbc.properties
-src/main/resources/redis.properties
-src/main/resources/mail.properties
-
-
-src/test/resources/jdbc.properties
-src/test/resources/redis.properties
-src/test/resources/mail.properties
-#
+src/test/resources/*.properties
 *.log
+
+# system 
+.DS_Store
+
+
