@@ -18,8 +18,7 @@ ssm.iml
 .idea/
 
 # project
-src/main/resources/*.properties
-src/test/resources/*.properties
+*.properties
 *.log
 
 # system 
