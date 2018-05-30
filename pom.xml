@@ -16,7 +16,7 @@
         <mybatis.version>3.1.1</mybatis.version>
         <logback.version>1.2.3</logback.version>
         <mysql.connector.version>5.1.42</mysql.connector.version>
-        <druid.version>1.1.9</druid.version>
+        <druid.version>1.1.10</druid.version>
         <apache.shiro.version>1.4.0</apache.shiro.version>
         <org.quartz.version>2.2.3</org.quartz.version>
     </properties>
@@ -272,9 +272,41 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
-
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources.${deploy.type}</directory>
+                <excludes>
+                    <!-- 举例说明排除的文件 -->
+                    <exclude>*.jsp</exclude>
+                </excludes>
+            </resource>
+
+            <!-- 公共部分 -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
+
+    <!-- maven环境隔离 -->
+    <profiles>
+        <profile>
+        <id>dev</id>
+        <activation>
+            <!-- 设置为默认编译环境 -->
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <deploy.type>dev</deploy.type>
+        </properties>
+    </profile>
+    <profile>
+        <id>prod</id>
+        <properties>
+            <deploy.type>prod</deploy.type>
+        </properties>
+    </profile>
+    </profiles>
 
 </project>
