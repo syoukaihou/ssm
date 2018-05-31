@@ -26,9 +26,9 @@ mail.password=password
 mail.smtp.ssl.enable=true
 
 ############ redis ############
-redis.host=127.0.0.1
+redis.host=192.168.1.232
 redis.port=6379
-redis.password=pwssword
+redis.password=foo
 redis.timeout=2000
 #最大能够保持空闲状态的链接数
 redis.pool.maxIdle=6
@@ -38,5 +38,5 @@ redis.pool.maxWait=50
 redis.pool.testOnBorrow=true
 
 ############ kafka ############
-kafka.server=192.168.0.103:9092
+kafka.server=192.168.1.232:9092
 kafka.topic=myTopic

@@ -5,7 +5,7 @@ package com.snsprj.common;
  */
 public enum ResponseCode {
 
-    SUCCESS(0,"SUCCESS");
+    SUCCESS(200,"SUCCESS");
 
     private final int code;
     private final String desc;
