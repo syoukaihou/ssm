@@ -2,11 +2,20 @@ package com.snsprj.controller;
 
 import com.snsprj.common.ServerResponse;
 import com.snsprj.dto.User;
+import com.snsprj.utils.CSVUtil;
+import com.snsprj.utils.CompressUtil;
+import com.snsprj.utils.SeparatorUtils;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,9 +23,13 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +52,7 @@ public class DemoController {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
 
-    @Autowired
-    ServletContext context;
+    private static final int BUFFER_SIZE = 1024;
 
     /**
      * 测试文件上传
@@ -53,6 +65,8 @@ public class DemoController {
     public ServerResponse<Object> testFileUpload(HttpServletRequest request)
         throws IOException {
 
+        String fileSeparator = SeparatorUtils.getFileSeparator();
+
         // 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver =
             new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -61,8 +75,11 @@ public class DemoController {
 
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 
-            Iterator<String> iterable = multiRequest.getFileNames();
+            String timeStamp = String.valueOf(new Date().getTime());
+            String targetDirPath =
+              request.getSession().getServletContext().getRealPath("/") + timeStamp + fileSeparator;
 
+            Iterator<String> iterable = multiRequest.getFileNames();
             while (iterable.hasNext()) {
                 MultipartFile file = multiRequest.getFile(iterable.next());
 
@@ -74,25 +91,20 @@ public class DemoController {
 
                     InputStream inputStream = file.getInputStream();
 
-                    String[] headers = {"id","type","value"};
-                    CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(headers);
-                    CSVParser parser =  CSVParser.parse(inputStream, Charset.forName("GBK"),csvFormat);
+                    // 解压zip包
+                    List<String> filePathList = CompressUtil.unZip(inputStream,targetDirPath);
 
-                    for (CSVRecord record : parser)
-                    {
-                        if (StringUtils.equals(headers[0],record.get(headers[0]))){
-                            continue;
-                        }
-                        Integer id = Integer.valueOf(record.get("id"));
-                        String type = record.get("type");
-                        String value = record.get("value");
+                    // 解析CSV
+                    for (String localFilePath : filePathList) {
 
-                        logger.info("====> id is " + id);
-                        logger.info("====> type is " + type);
-                        logger.info("====> value is " + value);
+                        String[] headers = {"id", "type", "value"};
+                        CSVUtil.parseCSVFile(headers, localFilePath);
                     }
-                    logger.info("file name is " + file.getOriginalFilename());
-                    logger.info("param-->" + file.getName());
+
+                    // 临时文件根目录
+                    File localFileDir = new File(targetDirPath);
+                    // 删除临时文件目录
+                    FileUtils.deleteDirectory(localFileDir);
                 }
             }
         } else{
@@ -104,14 +116,15 @@ public class DemoController {
     @RequestMapping(value = "upload2",method = {RequestMethod.POST})
     @ResponseBody
     public ServerResponse<String> uploadFile(@RequestParam("file")MultipartFile uploadFile,
-      HttpSession session)
-      throws IOException {
+      HttpSession session) throws IOException {
+
+        String fileSeparator = SeparatorUtils.getFileSeparator();
 
         if (null != uploadFile){
             String fileName = uploadFile.getOriginalFilename();
             logger.info("====>fileName is " + fileName);
 
-            String filePath = session.getServletContext().getRealPath("/");
+            String filePath = session.getServletContext().getRealPath(fileSeparator);
             logger.info("====> file path is " + filePath);
 
             File file = new File(filePath,fileName);
@@ -139,5 +152,4 @@ public class DemoController {
 
         return  ServerResponse.createBySuccess();
     }
-
 }
