@@ -148,8 +148,21 @@ public class DemoController {
 
     @RequestMapping(value = "response")
     @ResponseBody
-    public ServerResponse<String> testResponse(){
+    public ServerResponse<String> testResponse(HttpServletRequest request){
 
-        return  ServerResponse.createBySuccess();
+        // 获取session，没有就创建一个
+        HttpSession session = request.getSession(true);
+
+        Integer reqNum = (Integer) session.getAttribute("reqNum");
+
+        if (reqNum == null){
+            reqNum = 1;
+        }else {
+            reqNum ++;
+        }
+
+        session.setAttribute("reqNum",reqNum);
+
+        return  ServerResponse.createBySuccess("第" + reqNum + "访问！");
     }
 }

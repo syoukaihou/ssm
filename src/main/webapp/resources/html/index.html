@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>home</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 </head>
 <body>
 <h1>首页</h1>
@@ -10,6 +11,30 @@
 
 <h3><a href="cors">跨域请求</a></h3>
 
+<button id="btn_get">get</button>
+
 <script src="/resources/javascript/main.js"></script>
+<script>
+    document.getElementById("btn_get").onclick = function () {
+        var getReq = new XMLHttpRequest();
+        var host = "http://baoge.com/";
+        var uri = "test/response";
+        var url = host + uri;
+        getReq.open("GET",url);
+        getReq.send();
+        getReq.onreadystatechange = function () {
+            if(getReq.readyState === 4){
+                var reqStatus = getReq.status;
+                if (reqStatus === 200){
+                    var reqText = getReq.responseText;
+                    console.log(reqText);
+                    alert(reqText);
+                }else {
+                    alert("发生错误：" + reqStatus);
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

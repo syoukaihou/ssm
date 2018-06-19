@@ -46,7 +46,7 @@
     <!-- 设置Cookie domain 和 名称 -->
     <bean id="defaultCookieSerializer"
         class="org.springframework.session.web.http.DefaultCookieSerializer">
-        <property name="domainName" value="snsprj.cn"/>
+        <property name="domainName" value="${session.domain}"/>
         <property name="cookieName" value="JSESSIONID"/>
         <property name="cookiePath" value="/"/>
     </bean>

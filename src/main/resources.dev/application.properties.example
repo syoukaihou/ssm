@@ -1,3 +1,7 @@
+#############################
+############ dev ############
+#############################
+
 ############ jdbc ############
 jdbc.driverClass=com.mysql.jdbc.Driver
 
@@ -36,6 +40,10 @@ redis.pool.maxIdle=6
 redis.pool.maxWait=50
 #当调用borrow Object方法时，是否进行有效性检查
 redis.pool.testOnBorrow=true
+
+############ session 共享 ############
+#session.domain=.snsprj.cn
+session.domain=localhost:8080
 
 ############ kafka ############
 kafka.server=192.168.1.232:9092

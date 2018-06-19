@@ -21,7 +21,7 @@
 
         <!-- 临界值过滤器，过滤掉 TRACE 和 DEBUG 级别的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>DEBUG</level>
         </filter>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -131,5 +131,11 @@
         <!--<appender-ref ref="INFO"/>-->
         <!--<appender-ref ref="ERROR"/>-->
     <!--</logger>-->
+
+    <!-- logger节点，可选节点，用来具体指明包的日志输出级别，它将会覆盖root的输出级别 -->
+    <!-- 限制kafka的日志输出 -->
+    <logger name="org.springframework.kafka" level="INFO"/>
+    <logger name="org.apache.kafka" level="INFO"/>
+
 
 </configuration>
