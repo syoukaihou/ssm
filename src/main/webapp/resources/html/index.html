@@ -17,8 +17,8 @@
 <script>
     document.getElementById("btn_get").onclick = function () {
         var getReq = new XMLHttpRequest();
-        var host = "http://baoge.com/";
-        var uri = "test/response";
+        var host = "http://localhost:8080";
+        var uri = "/test/response";
         var url = host + uri;
         getReq.open("GET",url);
         getReq.send();
